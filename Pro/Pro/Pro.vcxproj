@@ -154,6 +154,7 @@
     <ClInclude Include="Actions\Cut.h" />
     <ClInclude Include="Actions\HandleActiveBar.h" />
     <ClInclude Include="Actions\Paste.h" />
+    <ClInclude Include="Actions\Validation.h" />
     <ClInclude Include="Actions\ZoomIn.h" />
     <ClInclude Include="Actions\ZoomOut.h" />
     <ClInclude Include="ApplicationManager.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Actions\Cut.cpp" />
     <ClCompile Include="Actions\HandleActiveBar.cpp" />
     <ClCompile Include="Actions\Paste.cpp" />
+    <ClCompile Include="Actions\Validation.cpp" />
     <ClCompile Include="Actions\ZoomIn.cpp" />
     <ClCompile Include="Actions\ZoomOut.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
