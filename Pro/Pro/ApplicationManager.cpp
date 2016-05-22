@@ -185,3 +185,30 @@ bool ApplicationManager::IsValidToSimulate()
 	}
 	return true;
 }
+
+bool ApplicationManager::Simulate()
+{
+	std::vector<bool>IsOperated(Components.size(), false);
+	bool Infiniteloop = true;
+	do
+	{
+		for (unsigned int i = 0; i < Components.size(); i++)
+		{
+			if (Components[i]->IsValidToOperate() && !IsOperated[i])
+			{
+				Infiniteloop = false;
+				Components[i]->Operate();
+				IsOperated[i] = true;
+			}
+		}
+		if (Infiniteloop)
+		{
+			return false;
+		}
+		else
+		{
+			Infiniteloop = true;
+		}
+	} while (std::accumulate(IsOperated.begin(), IsOperated.end(), 0) != Components.size());
+	return true;
+}

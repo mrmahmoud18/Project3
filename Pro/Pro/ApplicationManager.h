@@ -6,6 +6,7 @@
 #include "Actions/Action.h"
 
 #include <vector>
+#include <numeric>
 
 class Component;
 
@@ -29,4 +30,5 @@ public:
 	Interface* GetInterface();
 	std::vector<Component*>& GetComponents();
 	bool IsValidToSimulate();
+	bool Simulate();
 };
