@@ -7,5 +7,6 @@ class NOT: public Gate
 public:
 	NOT(const GraphicsInfo &r_GfxInfo, std::string r_Label = "");
 	virtual void Operate();
-	virtual void Draw(Interface* pInterface);
+	virtual void Draw(Interface* pInterface) const;
+	virtual void Copy(ApplicationManager* pManager) const;
 };

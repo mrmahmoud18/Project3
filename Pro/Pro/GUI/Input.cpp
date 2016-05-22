@@ -1,9 +1,7 @@
 #include "Input.h"
 
 #include "Interface.h"
-#include "Output.h"
 #include "Bar.h"
-#include "Button.h"
 #include "Canvas.h"
 
 #include <vector>
@@ -29,7 +27,6 @@ std::pair<int,int> Input::GetPointClicked() const
         switch (dummyEvent.type)
         {
         case sf::Event::Closed:
-            pInterface->Window.close();
             exit(0);
         case sf::Event::MouseButtonPressed:
             return std::pair<int,int>(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y);
@@ -100,7 +97,7 @@ std::string Input::GetSrting() const
     return EnteredString;
 }
 
-Action::ActionType Input::GetUserAction() const
+ActionType Input::GetUserAction() const
 {
     sf::Event dummyEvent;
     while(pInterface->Window.pollEvent(dummyEvent))
@@ -109,140 +106,83 @@ Action::ActionType Input::GetUserAction() const
         {
         case sf::Event::Closed:
             pInterface->Window.close();
-            return Action::EXIT;
+            return EXIT;
         case sf::Event::MouseButtonPressed:
             if(dummyEvent.mouseButton.button == sf::Mouse::Left)
             {
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
-                    return Action::ADJUST_OFFSET;
                 if(pInterface->StatusBar->GetGraphicsInfo().Contains(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y))
-                    return Action::STATUS_BAR;
+                    return STATUS_BAR;
                 if(pInterface->SimCanvas->GetGraphicsInfo().Contains(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y))
-                    return Action::CANVAS_LEFT_CLICK;
-                return Action::ACTIVE_BAR_CLICK;
+                    return CANVAS_LEFT_CLICK;
+                return ACTIVE_BAR_CLICK;
             }
             if(dummyEvent.mouseButton.button == sf::Mouse::Right)
-                return Action::CANVAS_RIGHT_CLICK;
-            break;
-        case sf::Event::MouseMoved:
-            /*if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-            {
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
-                    {
-                        std::pair<int,int> NewMousePosition = GetMousePosition();
-                        pInterface->AdjustOffset(std::pair<int,int>(MousePosition.first-NewMousePosition.first, MousePosition.second-NewMousePosition.second));
-                        return NONE;
-                    }
-                else
-                    return MOVE;
-            }*/
+                return CANVAS_RIGHT_CLICK;
             break;
         case sf::Event::MouseWheelScrolled:
             if(dummyEvent.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
             {
-                if(dummyEvent.mouseWheelScroll.delta > 0)         return Action::ZOOM_IN;
-                else if(dummyEvent.mouseWheelScroll.delta < 0)    return Action::ZOOM_OUT;
+                if(dummyEvent.mouseWheelScroll.delta > 0)         return ZOOM_IN;
+                else if(dummyEvent.mouseWheelScroll.delta < 0)    return ZOOM_OUT;
             }
             break;
         case sf::Event::KeyPressed:
             if(dummyEvent.key.code == sf::Keyboard::Add)
-                return Action::ZOOM_IN;
+                return ZOOM_IN;
             else if(dummyEvent.key.code == sf::Keyboard::Subtract)
-                return Action::ZOOM_OUT;
+                return ZOOM_OUT;
         default:
             break;
         }
     }
-    return Action::NONE;
-}
-/*
-Action::ActionType Input::HandleButton(Button* pButton, sf::Event dummyEvent) const
-{
-    if(pButton->GetStatus() == Button::DISABLED)
-        return Action::NONE;
-    pButton->SetStatus(Button::FOCUSED);
-    pButton->Draw(pInterface->MainOutput);
-    pInterface->MainOutput->SyncWindow();
-    while(pInterface->Window.waitEvent(dummyEvent))
-        switch (dummyEvent.type)
-        {
-        case sf::Event::Closed:
-            pInterface->Window.close();
-            return Action::EXIT;
-        case sf::Event::MouseButtonReleased:
-            if(pButton->GetGraphicsInfo().Contains(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y))
-                {
-                    if(pButton->GetAction() != Action::ADD)
-                    {
-                        pButton->SetStatus(Button::NORMAL);
-                        pButton->Draw(pInterface->MainOutput);
-                        pInterface->MainOutput->SyncWindow();
-                        return pButton->GetAction();
-                    }
-                    pButton->SetStatus(Button::PRESSED);
-                    pInterface->MainOutput->UpdateActiveBar();
-                    pInterface->MainOutput->SyncWindow();
-                    Action::ActionType dummyAction = HandleADD();
-                    pButton->SetStatus(Button::NORMAL);
-                    pInterface->MainOutput->UpdateActiveBar();
-                    pInterface->MainOutput->SyncWindow();
-                    return dummyAction;
-                }
-            else
-                {
-                    pButton->SetStatus(Button::NORMAL);
-                    pButton->Draw(pInterface->MainOutput);
-                    pInterface->MainOutput->SyncWindow();
-                    return Action::NONE;
-                }
-            break;
-        default:
-            pButton->Draw(pInterface->MainOutput);
-            pInterface->MainOutput->SyncWindow();
-            break;
-        }
-    return Action::NONE;
+    return NONE;
 }
 
-Action::ActionType Input::HandleADD() const
+bool Input::IsDoubleClick() const
 {
-    pInterface->MainOutput->DrawGatesBars();
-    pInterface->MainOutput->SyncWindow();
     sf::Event dummyEvent;
-    while(pInterface->Window.waitEvent(dummyEvent))
+    sf::Clock dummyClock;
+    while(dummyClock.getElapsedTime().asMilliseconds() < 500)
     {
-        switch (dummyEvent.type)
+        dummyEvent.type = sf::Event::Count;
+        pInterface->Window.pollEvent(dummyEvent);
+        switch(dummyEvent.type)
         {
         case sf::Event::Closed:
-            pInterface->Window.close();
-            return Action::EXIT;
+            exit(0);
         case sf::Event::MouseButtonPressed:
-            {
-                const std::vector<Button*>& dummyVector = pInterface->GatesBar->GetButtons();
-                for(unsigned int i = 0; i < dummyVector.size(); i++)
-                    if(dummyVector[i] != NULL)
-                        if(dummyVector[i]->GetGraphicsInfo().Contains(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y))
-                            return dummyVector[i]->GetAction();
-            }
-            {
-                const std::vector<Button*>& dummyVector = pInterface->NGatesBar->GetButtons();
-                for(unsigned int i = 0; i < dummyVector.size(); i++)
-                    if(dummyVector[i] != NULL)
-                        if(dummyVector[i]->GetGraphicsInfo().Contains(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y))
-                            return dummyVector[i]->GetAction();
-            }
-        case sf::Event::KeyPressed:
-            return Action::NONE;
+            return true;
+        case sf::Event::MouseMoved:
+            if(dummyEvent.mouseMove.x + dummyEvent.mouseMove.y > 5)
+                return false;
+            break;
         default:
-            pInterface->MainOutput->DrawGatesBars();
-            pInterface->MainOutput->SyncWindow();
             break;
         }
     }
-    return Action::NONE;
+    return false;
 }
-*/
+
 bool Input::IsDragging() const
 {
+    sf::Event dummyEvent;
+    dummyEvent.type = sf::Event::Count;
+    pInterface->Window.waitEvent(dummyEvent);
+    switch (dummyEvent.type)
+    {
+    case sf::Event::Closed:
+        exit(0);
+    case sf::Event::MouseMoved:
+        return sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    case sf::Event::MouseButtonReleased:
+        return false;
+    default:
+        break;
+    }
     return sf::Mouse::isButtonPressed(sf::Mouse::Left);
+}
+
+bool Input::IsCtrlOn() const
+{
+    return sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl);
 }

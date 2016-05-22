@@ -1,5 +1,6 @@
 #include "XNOR3.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 XNOR3::XNOR3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -12,25 +13,10 @@ XNOR3::XNOR3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxIn
 
 void XNOR3::Operate()
 {
-	int cont = 0;
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::HIGH)
-		{
-			cont++;
-		}
-	}
-	if (cont == 2 || cont == 0)
-	{
-		m_OutputPin.SetStatus(Pin::HIGH);
-	}
-	else
-	{
-		m_OutputPin.SetStatus(Pin::LOW);
-	}
+
 }
 
-void XNOR3::Draw(Interface * pInterface)
+void XNOR3::Draw(Interface * pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "XNOR3", GetStatus());
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -38,3 +24,7 @@ void XNOR3::Draw(Interface * pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
+void XNOR3::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new XNOR3(*this));
+}

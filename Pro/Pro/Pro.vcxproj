@@ -149,10 +149,14 @@
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\Add.h" />
     <ClInclude Include="Actions\AddComponent.h" />
+    <ClInclude Include="Actions\AddConnection.h" />
     <ClInclude Include="Actions\AdjustOffset.h" />
     <ClInclude Include="Actions\Copy.h" />
     <ClInclude Include="Actions\Cut.h" />
+    <ClInclude Include="Actions\Delete.h" />
+    <ClInclude Include="Actions\Drag.h" />
     <ClInclude Include="Actions\HandleActiveBar.h" />
+    <ClInclude Include="Actions\HandleLeftClick.h" />
     <ClInclude Include="Actions\Paste.h" />
     <ClInclude Include="Actions\ZoomIn.h" />
     <ClInclude Include="Actions\ZoomOut.h" />
@@ -180,6 +184,7 @@
     <ClInclude Include="Components\XNOR3.h" />
     <ClInclude Include="Components\XOR2.h" />
     <ClInclude Include="Components\XOR3.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="GraphicsInfo.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GUI\Bar.h" />
@@ -193,10 +198,14 @@
   <ItemGroup>
     <ClCompile Include="Actions\Add.cpp" />
     <ClCompile Include="Actions\AddComponent.cpp" />
+    <ClCompile Include="Actions\AddConnection.cpp" />
     <ClCompile Include="Actions\AdjustOffset.cpp" />
     <ClCompile Include="Actions\Copy.cpp" />
     <ClCompile Include="Actions\Cut.cpp" />
+    <ClCompile Include="Actions\Delete.cpp" />
+    <ClCompile Include="Actions\Drag.cpp" />
     <ClCompile Include="Actions\HandleActiveBar.cpp" />
+    <ClCompile Include="Actions\HandleLeftClick.cpp" />
     <ClCompile Include="Actions\Paste.cpp" />
     <ClCompile Include="Actions\ZoomIn.cpp" />
     <ClCompile Include="Actions\ZoomOut.cpp" />

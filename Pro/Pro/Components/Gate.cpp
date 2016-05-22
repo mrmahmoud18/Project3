@@ -1,6 +1,7 @@
 #include "Gate.h"
 
 #include "InputPin.h"
+#include "../Grid.h"
 
 Gate::Gate(const GraphicsInfo &r_GfxInfo, int r_FanOut): m_GfxInfo(r_GfxInfo), m_OutputPin(std::pair<int,int> (r_GfxInfo.GetX()+10, r_GfxInfo.GetY()+6), r_FanOut) {}
 
@@ -24,36 +25,33 @@ OutputPin* Gate::GetOutputPin()
     return &m_OutputPin;
 }
 
-bool Gate::IsValidToOperate()
+std::set<Component*> Gate::GetAssociatedComponents()
 {
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::FLOATING)
-		{
-			return false;
-		}
-	}
-	return true;
+    std::vector<Connection*> dummy = m_OutputPin.GetConnections();
+    std::set<Component*> AssociatedComponents;
+    for(unsigned int i = 0; i < dummy.size(); i++)
+        AssociatedComponents.insert((Component*)(dummy[i]));
+    for(unsigned int i = 0; i < m_InputPins.size(); i++)
+        AssociatedComponents.insert((Component*)(m_InputPins[i].GetConnection()));
+    return AssociatedComponents;
 }
 
-bool Gate::IsValidToSimulate()
+void Gate::ShiftBy(std::pair<int,int> Delta)
 {
-	if (! m_OutputPin.IsValidToSimulate())
-	{
-		return false;
-	}
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (!m_InputPins[i].IsValidToSimulate())return false;
-	}
-	return true;
+    m_GfxInfo.ShiftBy(Delta);
 }
 
-void Gate::ClearStatus()
+std::pair<int,int> Gate::GetCenter() const
 {
-	m_OutputPin.SetStatus(Pin::FLOATING);
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		m_InputPins[i].SetStatus(Pin::FLOATING);
-	}
+    return m_GfxInfo.GetCenter();
+}
+
+void Gate::GetIn(Grid* SimGrid)
+{
+    SimGrid->AddGate(this);
+}
+
+void Gate::GetOut(Grid* SimGrid)
+{
+    SimGrid->RemoveGate(this);
 }

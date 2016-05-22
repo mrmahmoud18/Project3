@@ -1,5 +1,6 @@
 #include "OR2.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 OR2::OR2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -11,20 +12,18 @@ OR2::OR2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 
 
 void OR2::Operate()
 {
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::LOW)
-		{
-			m_OutputPin.SetStatus(Pin::LOW);
-		}
-	}
-	m_OutputPin.SetStatus(Pin::HIGH);
+
 }
 
-void OR2::Draw(Interface* pInterface)
+void OR2::Draw(Interface* pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "OR2", GetStatus());
 	for(unsigned int i = 0; i < m_InputPins.size(); i++)
         m_InputPins[i].Draw(pInterface);
 	m_OutputPin.Draw(pInterface);
+}
+
+void OR2::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new OR2(*this));
 }

@@ -1,5 +1,6 @@
 #include "XOR3.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 XOR3::XOR3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -12,25 +13,10 @@ XOR3::XOR3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo
 
 void XOR3::Operate()
 {
-	int cont = 0;
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::HIGH)
-		{
-			cont++;
-		}
-	}
-	if (cont == 1 || cont == 3)
-	{
-		m_OutputPin.SetStatus(Pin::HIGH);
-	}
-	else
-	{
-		m_OutputPin.SetStatus(Pin::LOW);
-	}
+
 }
 
-void XOR3::Draw(Interface * pInterface)
+void XOR3::Draw(Interface * pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "XOR3", GetStatus());
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -38,3 +24,7 @@ void XOR3::Draw(Interface * pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
+void XOR3::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new XOR3(*this));
+}

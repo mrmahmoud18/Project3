@@ -2,18 +2,18 @@
 
 #include "Action.h"
 
-#include <vector>
-
 class Component;
+class Pin;
 
-class Paste: public Action
+class HandleLeftClick: public Action
 {
 private:
-    std::vector<Component*> Clipboard;
+    Component* pComp;
+    Pin* pPin;
     virtual void ReadActionParameters();
 
 public:
-    Paste(ApplicationManager *pApp);
+    HandleLeftClick(ApplicationManager *pApp);
 	virtual void Execute();
 	virtual void Undo();
 	virtual void Redo();

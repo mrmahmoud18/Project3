@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Actions/Action.h"
+#include "../Enums.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -22,6 +22,9 @@ public:
 	std::pair<int,int> GetInstantClick() const;
 	std::pair<int,int> GetInstantRelease() const;
 	std::string GetSrting() const;
-	Action::ActionType GetUserAction() const;
+	ActionType GetUserAction() const;
+	bool IsSingleClick() const;
+	bool IsDoubleClick() const;
 	bool IsDragging() const;
+	bool IsCtrlOn() const;
 };

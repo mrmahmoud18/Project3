@@ -7,7 +7,12 @@ InputPin::InputPin(std::pair<int,int> r_Center): Pin(r_Center)
     m_Connection = NULL;
 }
 
-bool InputPin::IsConnectable()
+Connection* InputPin::GetConnection()
+{
+    return m_Connection;
+}
+
+bool InputPin::IsConnectable() const
 {
     return m_Connection == NULL;
 }
@@ -25,12 +30,7 @@ void InputPin::DeconnectFrom(Connection* r_Connection)
         throw;
 }
 
-void InputPin::Draw(Interface* pInterface)
+void InputPin::Draw(Interface* pInterface) const
 {
     pInterface->DrawPin(GetCenter(), m_Connection != NULL);
-}
-
-bool InputPin::IsValidToSimulate()
-{
-	return (m_Connection != NULL);
 }

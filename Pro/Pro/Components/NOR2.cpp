@@ -1,5 +1,6 @@
 #include "NOR2.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 NOR2::NOR2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -11,17 +12,10 @@ NOR2::NOR2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo
 
 void NOR2::Operate()
 {
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::HIGH)
-		{
-			m_OutputPin.SetStatus(Pin::LOW);
-		}
-	}
-	m_OutputPin.SetStatus(Pin::HIGH);
+
 }
 
-void NOR2::Draw(Interface* pInterface)
+void NOR2::Draw(Interface* pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "NOR2", GetStatus());
 	for(unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -29,5 +23,7 @@ void NOR2::Draw(Interface* pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
-
-
+void NOR2::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new NOR2(*this));
+}

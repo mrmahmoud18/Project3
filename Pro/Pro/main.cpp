@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <sstream>
 #include <cmath>
@@ -7,7 +6,7 @@
 
 int main()
 {
-	Action::ActionType ActType;
+	ActionType ActType;
 	//Create an object of ApplicationManager
 	ApplicationManager AppManager;
 
@@ -22,6 +21,6 @@ int main()
 		//Update the drawing window
 		AppManager.UpdateInterface();
 		AppManager.SyncInterface();
-	}while(ActType != Action::EXIT);
+	}while(ActType != EXIT);
 	return 0;
 }

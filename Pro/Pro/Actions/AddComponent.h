@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Enums.h"
 #include "Action.h"
 
 #include <string>
@@ -15,7 +16,7 @@ private:
 	virtual void ReadActionParameters();
 
 public:
-    AddComponent(ApplicationManager *pApp, Action::ActionType r_ActionType);
+    AddComponent(ApplicationManager *pApp, ActionType r_ActionType);
 	virtual void Execute();
 	virtual void Undo();
 	virtual void Redo();

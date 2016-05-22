@@ -15,7 +15,7 @@ public:
     Bar(const GraphicsInfo& r_GfxInfo, BarLayout r_Layout, int r_Spacing);
     ~Bar();
     void Draw(Output* pOut);
-    void AddButton(const std::string& ImagePath, Action::ActionType Act, Button::ButtonStatus Status = Button::NORMAL, int Offset = 0);
+    void AddButton(const std::string& ImagePath, ActionType Act, Interface::ButtonStatus Status = Interface::NORMAL, int Offset = 0);
     void OptimizeSpacing();
     const GraphicsInfo& GetGraphicsInfo() const;
     const std::vector<Button*>& GetButtons() const;

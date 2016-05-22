@@ -18,34 +18,46 @@
     <ClInclude Include="Simulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.h">
+    <ClInclude Include="Actions\Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsInfo.h">
+    <ClInclude Include="Actions\Add.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Clipboard.h">
+    <ClInclude Include="Actions\AddComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ApplicationManager.h">
+    <ClInclude Include="Actions\AddConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Bar.h">
+    <ClInclude Include="Actions\AdjustOffset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Button.h">
+    <ClInclude Include="Actions\Copy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Canvas.h">
+    <ClInclude Include="Actions\Cut.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Input.h">
+    <ClInclude Include="Actions\Delete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Interface.h">
+    <ClInclude Include="Actions\Drag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Output.h">
+    <ClInclude Include="Actions\HandleActiveBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\HandleLeftClick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Paste.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ZoomIn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ZoomOut.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\AND2.h">
@@ -114,69 +126,78 @@
     <ClInclude Include="Components\XOR3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Action.h">
+    <ClInclude Include="GUI\Bar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Add.h">
+    <ClInclude Include="GUI\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddComponent.h">
+    <ClInclude Include="GUI\Canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AdjustOffset.h">
+    <ClInclude Include="GUI\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Copy.h">
+    <ClInclude Include="GUI\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Cut.h">
+    <ClInclude Include="GUI\Output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\HandleActiveBar.h">
+    <ClInclude Include="ApplicationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Paste.h">
+    <ClInclude Include="Clipboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ZoomIn.h">
+    <ClInclude Include="Enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ZoomOut.h">
+    <ClInclude Include="GraphicsInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Actions\Add.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp">
+    <ClCompile Include="Actions\AddComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsInfo.cpp">
+    <ClCompile Include="Actions\AddConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Clipboard.cpp">
+    <ClCompile Include="Actions\AdjustOffset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ApplicationManager.cpp">
+    <ClCompile Include="Actions\Copy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Bar.cpp">
+    <ClCompile Include="Actions\Cut.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Button.cpp">
+    <ClCompile Include="Actions\Delete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Canvas.cpp">
+    <ClCompile Include="Actions\Drag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Input.cpp">
+    <ClCompile Include="Actions\HandleActiveBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Interface.cpp">
+    <ClCompile Include="Actions\HandleLeftClick.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Output.cpp">
+    <ClCompile Include="Actions\Paste.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ZoomIn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ZoomOut.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\AND2.cpp">
@@ -245,31 +266,37 @@
     <ClCompile Include="Components\XOR3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Add.cpp">
+    <ClCompile Include="GUI\Bar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddComponent.cpp">
+    <ClCompile Include="GUI\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AdjustOffset.cpp">
+    <ClCompile Include="GUI\Canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Copy.cpp">
+    <ClCompile Include="GUI\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Cut.cpp">
+    <ClCompile Include="GUI\Interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\HandleActiveBar.cpp">
+    <ClCompile Include="GUI\Output.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Paste.cpp">
+    <ClCompile Include="ApplicationManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ZoomIn.cpp">
+    <ClCompile Include="Clipboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ZoomOut.cpp">
+    <ClCompile Include="GraphicsInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

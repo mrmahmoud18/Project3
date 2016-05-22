@@ -12,17 +12,17 @@ void Pin::SetCenter(std::pair<int,int> r_Center)
     m_Center = r_Center;
 }
 
-std::pair<int,int> Pin::GetCenter()
+std::pair<int,int> Pin::GetCenter() const
 {
     return m_Center;
 }
 
-void Pin::SetStatus(Status r_Status)
+void Pin::SetStatus(Signal r_Status)
 {
     m_Status = r_Status;
 }
 
-Pin::Status Pin::GetStatus()
+Signal Pin::GetStatus() const
 {
     return m_Status;
 }

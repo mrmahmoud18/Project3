@@ -2,18 +2,19 @@
 
 #include "Action.h"
 
-#include <vector>
+#include <set>
 
 class Component;
 
-class Paste: public Action
+class Drag: public Action
 {
 private:
-    std::vector<Component*> Clipboard;
+    std::pair<int,int> Base;
+    std::set<Component*> Items;
     virtual void ReadActionParameters();
 
 public:
-    Paste(ApplicationManager *pApp);
+    Drag(ApplicationManager *pApp);
 	virtual void Execute();
 	virtual void Undo();
 	virtual void Redo();

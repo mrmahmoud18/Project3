@@ -13,11 +13,15 @@ public:
 	const GraphicsInfo& GetGraphicsInfo() const;
 	void SetLabel(std::string r_Label);
 	InputPin* GetInputPin();
+	virtual std::set<Component*> GetAssociatedComponents();
+	virtual void ShiftBy(std::pair<int,int> Delta);
+	virtual std::pair<int,int> GetCenter() const;
+	virtual void GetIn(Grid* SimGrid);
+	virtual void GetOut(Grid* SimGrid);
 	virtual void Operate();
-	virtual void Draw(Interface* pInterface);
-	virtual bool IsValidToOperate();
-	virtual bool IsValidToSimulate();
-	virtual void ClearStatus();
+	virtual void Draw(Interface* pInterface) const;
+	virtual void Copy(ApplicationManager* pManager) const;
+
 private:
     GraphicsInfo m_GfxInfo;
     std::string m_Label;

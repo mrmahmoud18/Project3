@@ -24,7 +24,9 @@ public:
 	void SetLabel(std::string r_Label);
     std::vector<InputPin>& GetInputPins();
 	OutputPin* GetOutputPin();
-	virtual bool IsValidToOperate();
-	virtual bool IsValidToSimulate();
-	virtual void ClearStatus();
+	virtual std::set<Component*> GetAssociatedComponents();
+	virtual void ShiftBy(std::pair<int,int> Delta);
+	virtual std::pair<int,int> GetCenter() const;
+	virtual void GetIn(Grid* SimGrid);
+	virtual void GetOut(Grid* SimGrid);
 };

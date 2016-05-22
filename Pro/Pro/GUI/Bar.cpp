@@ -24,7 +24,7 @@ void Bar::Draw(Output* pOut)
             Buttons[i]->Draw(pOut);
 }
 
-void Bar::AddButton(const std::string& ImagePath, Action::ActionType r_ActionType, Button::ButtonStatus Status, int Offset)
+void Bar::AddButton(const std::string& ImagePath, ActionType r_ActionType, Interface::ButtonStatus Status, int Offset)
 {
     if(Optimized)
         return;

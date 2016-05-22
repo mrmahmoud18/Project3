@@ -7,7 +7,7 @@ HandleActiveBar::HandleActiveBar(ApplicationManager *pApp): Action(pApp) {}
 
 void HandleActiveBar::ReadActionParameters()
 {
-    std::vector<Button*> Buttons = pManager->GetInterface()->GetActiveButtons();
+    const std::vector<Button*>& Buttons = pManager->GetInterface()->GetActiveButtons();
     for(unsigned int i = 0; i < Buttons.size(); i++)
         if(Buttons[i] != NULL)
             if(Buttons[i]->GetGraphicsInfo().Contains(pManager->GetInterface()->GetMousePosition(true)))
@@ -23,7 +23,7 @@ void HandleActiveBar::Execute()
     ReadActionParameters();
     if(TargetButton == NULL)
         return;
-    TargetButton->SetStatus(Button::FOCUSED);
+    TargetButton->SetStatus(Interface::FOCUSED);
     pManager->GetInterface()->SetBusy(true);
     std::pair<int,int> dummy;
     pManager->UpdateInterface();
@@ -34,7 +34,7 @@ void HandleActiveBar::Execute()
         pManager->UpdateInterface();
         pManager->SyncInterface();
     }while(dummy.first == -1 && dummy.second == -1);
-    TargetButton->SetStatus(Button::NORMAL);
+    TargetButton->SetStatus(Interface::NORMAL);
     pManager->GetInterface()->SetBusy(false);
     if(TargetButton->GetGraphicsInfo().Contains(dummy))
         pManager->ExecuteAction(TargetButton->GetAction());

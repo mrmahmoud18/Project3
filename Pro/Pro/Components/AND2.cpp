@@ -1,5 +1,6 @@
 #include "AND2.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 AND2::AND2(const GraphicsInfo & r_GfxInfo, std::string r_Label): Gate(r_GfxInfo, 5)
@@ -11,21 +12,18 @@ AND2::AND2(const GraphicsInfo & r_GfxInfo, std::string r_Label): Gate(r_GfxInfo,
 
 void AND2::Operate()
 {
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::LOW)
-		{
-			m_OutputPin.SetStatus(Pin::LOW);
-			return;
-		}
-	}
-	m_OutputPin.SetStatus(Pin::HIGH);
+    ///TODO
 }
 
-void AND2::Draw(Interface* pInterface)
+void AND2::Draw(Interface* pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "AND2", GetStatus());
 	for(unsigned int i = 0; i < m_InputPins.size(); i++)
         m_InputPins[i].Draw(pInterface);
     m_OutputPin.Draw(pInterface);
+}
+
+void AND2::Copy(ApplicationManager* pManager) const
+{
+    pManager->PushIntoClipboard(new AND2(*this));
 }
