@@ -1,0 +1,12 @@
+  <!-- Exspiravit -->
+
+<svg height="600" width="600">
+
+  <line x1="100" y1="300" x2="500" y2="300" style="stroke:#f39c12;stroke-width:10" />
+
+  <path d="M 200 200 l 175 100 l -175 100 z" stroke="black" stroke-width="10" fill="#f1c40f" />
+
+  <circle cx="400" cy="300" r="25" stroke="black" stroke-width="10" fill="#f1c40f" />
+
+</svg>
+

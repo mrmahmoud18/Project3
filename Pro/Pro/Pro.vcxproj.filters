@@ -273,7 +273,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="Graphics\Fonts\Caviar_Dreams_Bold.ttf" />
-  </ItemGroup>
 </Project>
