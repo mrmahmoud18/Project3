@@ -28,4 +28,5 @@ public:
 	Clipboard* GetClipboard();
 	Interface* GetInterface();
 	std::vector<Component*>& GetComponents();
+	bool IsValidToSimulate();
 };

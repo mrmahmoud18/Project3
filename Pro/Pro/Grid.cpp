@@ -242,7 +242,7 @@ void Grid::AddGate(Gate * r_pGate)
 
 	Nodes[Center.first + 4][Center.second].pPin = r_pGate->GetOutputPin();
 	Nodes[Center.first + 4][Center.second].pComp = r_pGate;
-	std::vector<InputPin>& temp = dynamic_cast<Gate*>(r_pGate)->GetInputPins();
+	std::vector<InputPin>& temp = r_pGate->GetInputPins();
 	std::vector<InputPin>::iterator min = temp.begin();
 	std::vector<InputPin>::iterator it = temp.begin();
 	for (unsigned int i = 1; i < temp.size(); i++)

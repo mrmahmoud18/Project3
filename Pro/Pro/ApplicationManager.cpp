@@ -173,3 +173,15 @@ std::vector<Component*>& ApplicationManager::GetComponents()
 {
     return Components;
 }
+
+bool ApplicationManager::IsValidToSimulate()
+{
+	for (unsigned int i = 0; i < Components.size(); i++)
+	{
+		if (! Components[i]->IsValidToSimulate())
+		{
+			return false;
+		}
+	}
+	return true;
+}

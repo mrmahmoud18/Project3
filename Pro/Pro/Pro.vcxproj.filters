@@ -147,6 +147,9 @@
     <ClInclude Include="Actions\Validation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Actions\Simulate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -276,6 +279,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Actions\Validation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Simulate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
