@@ -3,6 +3,8 @@
 #include "Components/Component.h"
 #include "Components/AND2.h"
 #include "Components/Connection.h"
+#include "Components\SWITCH.h"
+#include "Components\LED.h"
 
 #include "Actions/Add.h"
 #include "Actions/AddComponent.h"
@@ -211,4 +213,30 @@ bool ApplicationManager::Simulate()
 		}
 	} while (std::accumulate(IsOperated.begin(), IsOperated.end(), 0) != Components.size());
 	return true;
+}
+
+std::vector<SWITCH*> ApplicationManager::GetSWITCH()
+{
+	std::vector<SWITCH*>temp;
+	for (unsigned int i = 0; i < Components.size(); i++)
+	{
+		if (dynamic_cast<SWITCH*>(Components[i]))
+		{
+			temp.push_back(dynamic_cast<SWITCH*>(Components[i]));
+		}
+	}
+	return temp;
+}
+
+std::vector<LED*> ApplicationManager::GetLED()
+{
+	std::vector<LED*>temp;
+	for (unsigned int i = 0; i < Components.size(); i++)
+	{
+		if (dynamic_cast<LED*>(Components[i]))
+		{
+			temp.push_back(dynamic_cast<LED*>(Components[i]));
+		}
+	}
+	return temp;
 }

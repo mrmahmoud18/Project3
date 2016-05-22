@@ -31,4 +31,6 @@ public:
 	std::vector<Component*>& GetComponents();
 	bool IsValidToSimulate();
 	bool Simulate();
+	std::vector<SWITCH*>GetSWITCH();
+	std::vector<LED*>GetLED();
 };

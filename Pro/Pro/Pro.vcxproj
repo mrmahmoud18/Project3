@@ -155,6 +155,7 @@
     <ClInclude Include="Actions\HandleActiveBar.h" />
     <ClInclude Include="Actions\Paste.h" />
     <ClInclude Include="Actions\Simulate.h" />
+    <ClInclude Include="Actions\TruthTable.h" />
     <ClInclude Include="Actions\Validation.h" />
     <ClInclude Include="Actions\ZoomIn.h" />
     <ClInclude Include="Actions\ZoomOut.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Actions\HandleActiveBar.cpp" />
     <ClCompile Include="Actions\Paste.cpp" />
     <ClCompile Include="Actions\Simulate.cpp" />
+    <ClCompile Include="Actions\TruthTable.cpp" />
     <ClCompile Include="Actions\Validation.cpp" />
     <ClCompile Include="Actions\ZoomIn.cpp" />
     <ClCompile Include="Actions\ZoomOut.cpp" />
