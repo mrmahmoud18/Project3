@@ -14,25 +14,11 @@ Grid::Grid(int r_x, int r_y) {
 std::vector< std::pair<int, int> > Grid::FindPath(std::pair<int, int> Point1, std::pair<int, int> Point2)
 {
 	std::queue<Node> TempQueue;
-	//std::vector< std::vector<bool> >Visited(Xsize, std::vector <bool>(Ysize, false));
-	bool **Visited = new bool* [Xsize];
-	for (int i = 0; i < Xsize; i++)
-	{
-		Visited[i] = new bool[Ysize];
-	}
-	for (int i = 0; i < Xsize; i++)
-	{
-		for (int j = 0; j < Ysize; j++)
-		{
-			Visited[i][j] = false;
-		}
-	}
-
 	bool PathFounded = false;
 	int TempArrayX[4] = { 0,0,1,-1 }, TempArrayY[4] = { 1,-1,0,0 };
 	int Tempy, Tempx, CurrentX, CurrentY;
 	TempQueue.push(Nodes[Point1.first][Point1.second]);
-	Visited[Point1.first][Point1.second] = true;
+	Nodes[Point1.first][Point1.second].Visited = true;
 	while (!TempQueue.empty() && !PathFounded)
 	{
 		CurrentX = TempQueue.front().m_X;
@@ -41,21 +27,28 @@ std::vector< std::pair<int, int> > Grid::FindPath(std::pair<int, int> Point1, st
 		{
 			Tempx = TempArrayX[z] + CurrentX;
 			Tempy = TempArrayY[z] + CurrentY;
-			if (IsValidPoint(Tempx, Tempy, Visited))
+			if (IsValidPoint(Tempx, Tempy))
 			{
-                if (Tempx == Point2.first && Tempy == Point2.second)
-                {
-                    PathFounded = true;
-                    Nodes[Tempx][Tempy].m_XParent = CurrentX;
-                    Nodes[Tempx][Tempy].m_Yparent = CurrentY;
-                    ClearQueue(TempQueue);
-                    break;
-                }
+				if (Nodes[Tempx][Tempy].m_Stat==Node::PINPOINT)
+				{
+					if (Tempx == Point2.first && Tempy == Point2.second)
+					{
+						PathFounded = true;
+						Nodes[Tempx][Tempy].m_XParent = CurrentX;
+						Nodes[Tempx][Tempy].m_Yparent = CurrentY;
+						ClearQueue(TempQueue);
+						break;
+					}
+					else
+					{
+						continue;
+					}
+				}
 				if (ISValidState(Tempx, Tempy, TempQueue))
 				{
 					Nodes[Tempx][Tempy].m_XParent = CurrentX;
 					Nodes[Tempx][Tempy].m_Yparent = CurrentY;
-					Visited[Tempx][Tempy] = true;
+					Nodes[Tempx][Tempy].Visited = true;
 					TempQueue.push(Nodes[Tempx][Tempy]);
 				}
 			}
@@ -113,9 +106,9 @@ std::vector< std::pair<int, int> > Grid::CreateThePath(std::pair<int, int> Point
 	return Path;
 }
 
-bool Grid::IsValidPoint(int r_Tempx, int r_Tempy, bool**r_Visited /*std::vector< std::vector<bool> > &r_Visited*/)
+bool Grid::IsValidPoint(int r_Tempx, int r_Tempy)
 {
-	return (r_Tempx < Xsize && r_Tempx>0 && r_Tempy < Ysize  && r_Tempy>0 && !r_Visited[r_Tempx][r_Tempy]
+	return (r_Tempx < Xsize && r_Tempx>0 && r_Tempy < Ysize  && r_Tempy>0 && !Nodes[r_Tempx][r_Tempy].Visited
 		&& Nodes[r_Tempx][r_Tempy].m_Stat != Grid::Node::GATE && Nodes[r_Tempx][r_Tempy].m_Stat != Grid::Node::CONNECTIONFULL);
 }
 
@@ -141,6 +134,7 @@ void Grid::ClearParent()
 		{
 			Nodes[i][j].m_XParent = 0;
 			Nodes[i][j].m_Yparent = 0;
+			Nodes[i][j].Visited = false;
 		}
 	}
 }
@@ -155,6 +149,7 @@ void Grid::GridInitializion() {
 			Nodes[i][j].m_Y = j;
 			Nodes[i][j].pComp = NULL;
 			Nodes[i][j].pPin = NULL;
+			Nodes[i][j].Visited = false;
 		}
 	}
 }

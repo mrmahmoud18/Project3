@@ -34,6 +34,7 @@ private:
     struct Node
     {
         int m_X, m_Y , m_XParent ,m_Yparent;
+		bool Visited;
         enum {NOCONNECTION, CONNECTIONFULL, VERTICAL ,HORIZONTAL ,GATE ,PINPOINT ,NOTHING} m_Stat;
 		Component* pComp;
 		Pin* pPin;
@@ -41,7 +42,7 @@ private:
     std::vector< std::vector<Node> > Nodes;
 
 	std::vector< std::pair<int, int> > CreateThePath(std::pair<int, int> Point1, std::pair<int, int> Point2);
-	bool IsValidPoint(int r_TempX, int r_TempY, bool**r_Visited);
+	bool IsValidPoint(int r_TempX, int r_TempY);
 	bool ISValidState(int r_Tempx, int r_TempY, std::queue< Grid::Node>r_TempQueue);
 	void ClearQueue(std::queue < Grid::Node >& r_TempQueue);
 	void ClearParent();
