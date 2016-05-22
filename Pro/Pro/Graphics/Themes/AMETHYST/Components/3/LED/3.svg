@@ -1,0 +1,13 @@
+  <!-- Exspiravit -->
+
+<svg height="600" width="600">
+
+  <line x1="100" y1="300" x2="300" y2="300" style="stroke:#8e44ad;stroke-width:10" />
+
+  <circle cx="300" cy="300" r="100" stroke="black" stroke-width="10" fill="#9b59b6" />
+
+  <rect x="0" y="0" width="600" height="600"
+style="fill:#e74c3c;stroke:none;stroke-width:0;opacity:0.2" />
+
+</svg>
+

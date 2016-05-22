@@ -1,0 +1,15 @@
+  <!-- Exspiravit -->
+
+<svg height="600" width="600">
+
+  <line x1="100" y1="250" x2="200" y2="250" style="stroke:#2980b9;stroke-width:10" />
+  <line x1="100" y1="350" x2="200" y2="350" style="stroke:#2980b9;stroke-width:10" />
+  <line x1="100" y1="300" x2="200" y2="300" style="stroke:#2980b9;stroke-width:10" />
+  <line x1="300" y1="300" x2="500" y2="300" style="stroke:#2980b9;stroke-width:10" />
+
+  <path d="M 200 200 c 0 0 175 0 175 100 c 0 100 -175 100 -175 100 q 50 -100 0 -200 z" stroke="black" stroke-width="10" fill="#3498db" />
+
+  <path d="M 170 200 q 50 100 0 200" stroke="black" stroke-width="20" fill="none" />
+
+</svg>
+
