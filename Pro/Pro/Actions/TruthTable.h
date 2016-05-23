@@ -13,11 +13,13 @@ private:
 	void CreateAllCombinations(std::string s = "");
 	void SetSWITCHValues(std::string Combination);
 	void GetLEDResults();
+	void CreateTable();
 	std::vector<SWITCH*>Switches;
 	std::vector<LED*>Leds;
 	std::vector<std::string>Combinations;
 	std::vector<std::string>Lables;
 	std::vector<std::string>Results;
+	std::vector<std::vector <std::string> >Table;
 public:
 	TruthTable(ApplicationManager * pApp);
 	~TruthTable();

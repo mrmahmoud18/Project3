@@ -1,5 +1,6 @@
 #include "TruthTable.h"
 #include "../ApplicationManager.h"
+#include "TruthTable.h"
 #include "../Components/SWITCH.h"
 #include "../Components/LED.h"
 
@@ -54,6 +55,11 @@ void TruthTable::GetLEDResults()
 		}
 	}
 	Results.push_back(temp);
+}
+
+void TruthTable::CreateTable()
+{
+
 }
 
 
