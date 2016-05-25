@@ -1,9 +1,9 @@
 #include "AddNewConnection.h"
 
 #include "../ApplicationManager.h"
-#include "Connection.h"
-#include "InputPin.h"
-#include "OutputPin.h"
+#include "../Components/Connection.h"
+#include "../Components/InputPin.h"
+#include "../Components/OutputPin.h"
 
 AddNewConnection::AddNewConnection(ApplicationManager *pApp): Action(pApp) {}
 

@@ -45,7 +45,7 @@ void TruthTable::GetLEDResults()
 	std::string temp = "";
 	for (unsigned int i = 0; i < Leds.size(); i++)
 	{
-		if (Leds[i]->GetInputPin()->GetStatus() == Pin::LOW)
+		if (Leds[i]->GetInputPin()->GetStatus() == LOW)
 		{
 			temp += "0";
 		}

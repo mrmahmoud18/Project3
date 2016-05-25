@@ -3,7 +3,7 @@
 #include "../ApplicationManager.h"
 #include "../Components/AND2.h"
 
-AddComponent::AddComponent(ApplicationManager *pApp, Action::ActionType r_ActionType): Action(pApp)
+AddComponent::AddComponent(ApplicationManager *pApp, ActionType r_ActionType): Action(pApp)
 {
 	m_ActionType = r_ActionType;
 }
@@ -71,10 +71,10 @@ void AddComponent::ReadActionParameters()
 		std::pair<int,int> Position = pManager->GetInterface()->GetMousePosition();
 		Center = pManager->GetInterface()->GetInstantClick();
 		pManager->UpdateInterface();
-		if(pManager->GetGrid()->IsValidCenter(Position))
-            pManager->GetInterface()->DrawComponent(GraphicsInfo(Position.first-6, Position.second-6, 12, 12), FilePath, Component::NORMAL);
+		if(pManager->IsValidCenter(Position))
+            pManager->GetInterface()->DrawComponent(GraphicsInfo(Position.first-6, Position.second-6, 12, 12), FilePath, NORMAL);
 		else
-            pManager->GetInterface()->DrawComponent(GraphicsInfo(Position.first-6, Position.second-6, 12, 12), FilePath, Component::INVALID);
+            pManager->GetInterface()->DrawComponent(GraphicsInfo(Position.first-6, Position.second-6, 12, 12), FilePath, INVALID);
         pManager->GetInterface()->ResetWindow();
         pManager->GetInterface()->SetMouseStatus(Interface::HIDDEN);
         pManager->SyncInterface();
@@ -86,7 +86,7 @@ void AddComponent::ReadActionParameters()
 void AddComponent::Execute()
 {
 	ReadActionParameters();
-	if ((Center == std::pair<int, int>(-1, -1)) || !(pManager->GetGrid()->IsValidCenter(Center)))
+	if ((Center == std::pair<int, int>(-1, -1)) || !(pManager->IsValidCenter(Center)))
 		return;
 	switch (m_ActionType)
 	{
@@ -126,18 +126,18 @@ void AddComponent::Execute()
 	default:
 		break;
 	}
-	pManager->GetComponents().push_back(pComp);
+	pManager->AddComponent(pComp);
 	//pManager->GetGrid()->AddComponent(Center, pComp);
 }
 
 void AddComponent::Undo()
 {
-	pManager->GetComponents().pop_back();
-	pManager->GetGrid()->DeleteComponent(Center);
+	/*pManager->GetComponents().pop_back();
+	pManager->GetGrid()->DeleteComponent(Center);*/
 }
 
 void AddComponent::Redo()
 {
-	pManager->GetComponents().push_back(pComp);
+	/*pManager->GetComponents().push_back(pComp);*/
 	//pManager->GetGrid()->AddComponent(Center, pComp);
 }
