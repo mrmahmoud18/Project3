@@ -1,6 +1,8 @@
 #pragma once
 #include "Action.h"
 
+#include <fstream>
+#include <iomanip>
 #include<string>
 #include<vector>
 
@@ -16,13 +18,14 @@ private:
 	void GetSWITCHesValues();
 	void GetLEDsResults();
 	void CreateTable();
+	void PrintTruthTableInFile();
 	std::vector<SWITCH*>Switches;
 	std::vector<LED*>Leds;
 	std::vector<std::string>Combinations;
 	std::vector<std::string>Lables;
 	std::vector<std::string>Results;
 	std::vector<std::vector<std::string> >Table;
-	std::vector<std::string>OriginalSwitchData;
+	std::string OriginalSWITCHesData;
 public:
 	TruthTable(ApplicationManager * pApp);
 	~TruthTable();

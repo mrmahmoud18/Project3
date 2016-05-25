@@ -29,44 +29,62 @@ void TruthTable::SetSWITCHesValues(std::string Combination)
 {
 	for (unsigned int i = 0; i < Switches.size(); i++)
 	{
-		if (Combination[i]=='0')
-		{
-			Switches[i]->GetOutputPin()->SetStatus(LOW);
-		}
-		else
-		{
-			Switches[i]->GetOutputPin()->SetStatus(HIGH);
-		}
+		Switches[i]->GetOutputPin()->SetStatus((Combination[i] == '0') ? Signal::LOW : Signal::HIGH);
 	}
 }
 
 void TruthTable::GetSWITCHesValues()
 {
+	OriginalSWITCHesData = "";
 	for (unsigned int i = 0; i < Switches.size(); i++)
-	{
-		OriginalSwitchData.push_back((Switches[i]->GetStatus() == Signal::HIGH) ? "1" : "0");
-	}
+		OriginalSWITCHesData + ((Switches[i]->GetStatus() == Signal::HIGH) ? '1' : '0');
 }
 
 void TruthTable::GetLEDsResults()
 {
 	std::string temp = "";
 	for (unsigned int i = 0; i < Leds.size(); i++)
-	{
-		if (Leds[i]->GetInputPin()->GetStatus() == LOW)
-		{
-			temp += "0";
-		}
-		else
-		{
-			temp += "1";
-		}
-	}
+		temp + ((Leds[i]->GetStatus() == Signal::HIGH) ? '1' : '0');
+
 	Results.push_back(temp);
 }
 
 void TruthTable::CreateTable()
 {
+	Table.resize(Combinations.size()+1, std::vector<std::string>(Lables.size()));
+
+	for (unsigned int i = 0; i < Lables.size(); i++)
+		Table[0][i] = Lables[i];
+
+	for (unsigned int k = 1; k < Combinations.size() + 1; k++)
+	{
+		for (unsigned int i = 0; i < Switches.size(); i++)
+		{
+			Table[k][i] = Combinations[k - 1][i];
+		}
+		for (unsigned int j = Switches.size(); j < Leds.size() + Switches.size(); j++)
+		{
+			Table[k][j] = Results[k - 1][j];
+		}
+	}
+}
+
+void TruthTable::PrintTruthTableInFile()
+{
+	std::ofstream Out;
+	Out.open("Truth_Table");
+	if (! Out.is_open())
+		throw;
+
+	for (unsigned int i = 0; i < Table.size(); i++)
+	{
+		for (unsigned int j = 0; j < Table[0].size(); j++)
+		{
+			Out << Table[i][j] << std::setw(5);
+		}
+		Out << std::endl;
+	}
+	Out.close();
 }
 
 
@@ -92,6 +110,9 @@ void TruthTable::Execute()
 	}
 	GetSWITCHesValues();
 	CreateAllCombinations();
+	SetSWITCHesValues(OriginalSWITCHesData);
+	pManager->SimulateComponents();
+	PrintTruthTableInFile();
 }
 
 void TruthTable::Undo()
