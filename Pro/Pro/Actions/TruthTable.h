@@ -19,6 +19,7 @@ private:
 	void GetLEDsResults();
 	void CreateTable();
 	void PrintTruthTableInFile();
+	void PrintTruthTableOnScreen();
 	std::vector<SWITCH*>Switches;
 	std::vector<LED*>Leds;
 	std::vector<std::string>Combinations;

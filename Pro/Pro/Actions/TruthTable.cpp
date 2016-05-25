@@ -93,6 +93,11 @@ void TruthTable::PrintTruthTableInFile()
 	Out.close();
 }
 
+void TruthTable::PrintTruthTableOnScreen()
+{
+	// put ur call here
+}
+
 
 TruthTable::TruthTable(ApplicationManager * pApp)
 	:Action(pApp)
@@ -122,6 +127,8 @@ void TruthTable::Execute()
 	pManager->ResetComponents();
 	pManager->SimulateComponents();
 	PrintTruthTableInFile();
+	if (Switches.size() <= 4)
+		PrintTruthTableOnScreen();
 }
 
 void TruthTable::Undo()
