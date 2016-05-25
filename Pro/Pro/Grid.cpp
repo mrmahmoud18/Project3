@@ -95,16 +95,17 @@ void Grid::AddGate(Gate* pGate)
 		}
 
 	Nodes[Center.first + 4][Center.second].State = Node::PINPOINT;
-	Nodes[Center.first - 4][Center.second].State = Node::PINPOINT;
-	Nodes[Center.first - 4][Center.second + 1].State = Node::PINPOINT;
-	Nodes[Center.first - 4][Center.second - 1].State = Node::PINPOINT;
-
+	
 	Nodes[Center.first + 4][Center.second].pPin = pGate->GetOutputPin();
 	Nodes[Center.first + 4][Center.second].pComp = pGate;
 	std::vector<InputPin>& temp = pGate->GetInputPins();
 
 	if (temp.size() == 2)
 	{
+		Nodes[Center.first - 4][Center.second].State = Node::PINPOINT;
+		Nodes[Center.first - 4][Center.second + 1].State = Node::PINPOINT;
+		Nodes[Center.first - 4][Center.second - 1].State = Node::PINPOINT;
+
 		Nodes[Center.first - 4][Center.second - 1].pPin = &(temp[0]);
 		Nodes[Center.first - 4][Center.second - 1].pComp = pGate;
 		Nodes[Center.first - 4][Center.second + 1].pPin = &(temp[1]);
@@ -112,12 +113,27 @@ void Grid::AddGate(Gate* pGate)
 	}
 	else
 	{
-		Nodes[Center.first - 4][Center.second - 1].pPin = &(temp[0]);
-		Nodes[Center.first - 4][Center.second - 1].pComp = pGate;
-		Nodes[Center.first - 4][Center.second].pPin = &(temp[1]);
-		Nodes[Center.first - 4][Center.second].pComp = pGate;
-		Nodes[Center.first - 4][Center.second + 1].pPin = &(temp[2]);
-		Nodes[Center.first - 4][Center.second + 1].pComp = pGate;
+		if (temp.size() == 3)
+		{
+			Nodes[Center.first - 4][Center.second].State = Node::PINPOINT;
+			Nodes[Center.first - 4][Center.second + 1].State = Node::PINPOINT;
+			Nodes[Center.first - 4][Center.second - 1].State = Node::PINPOINT;
+
+			Nodes[Center.first - 4][Center.second - 1].pPin = &(temp[0]);
+			Nodes[Center.first - 4][Center.second - 1].pComp = pGate;
+			Nodes[Center.first - 4][Center.second].pPin = &(temp[1]);
+			Nodes[Center.first - 4][Center.second].pComp = pGate;
+			Nodes[Center.first - 4][Center.second + 1].pPin = &(temp[2]);
+			Nodes[Center.first - 4][Center.second + 1].pComp = pGate;
+		}
+		else
+		{
+			Nodes[Center.first - 4][Center.second].State = Node::PINPOINT;
+
+			Nodes[Center.first - 4][Center.second].pPin = &(temp[0]);
+			Nodes[Center.first - 4][Center.second].pComp = pGate;
+		}
+		
 	}
 
 	for (int i = -6; i <= 6; i++)
@@ -193,7 +209,12 @@ void Grid::AddConnection(Connection* pConnection)
 				Nodes[TempX][TempY].pComp = pConnection;
 			else
 				Nodes[TempX][TempY].pComp = NULL;
-			TempY++;
+
+			if (TempY > Path[Count].second)
+				TempY--;
+			else
+				TempY++;
+
 			if (TempY == Path[Count].second)
 				Count++;
 		}
@@ -208,7 +229,12 @@ void Grid::AddConnection(Connection* pConnection)
 				Nodes[TempX][TempY].pComp = pConnection;
 			else
 				Nodes[TempX][TempY].pComp = NULL;
-			TempX++;
+
+			if (TempX > Path[Count].first)
+				TempX--;
+			else
+				TempX++;
+
 			if (TempX == Path[Count].first)
 				Count++;
 		}
@@ -230,8 +256,17 @@ void Grid::RemoveGate(Gate* pGate)
     }
 	else
 	{
-		if (Nodes[Center.first - 4][Center.second - 1].pPin != &(temp[0]) || Nodes[Center.first - 4][Center.second].pPin != &(temp[1]) || Nodes[Center.first - 4][Center.second + 1].pPin != &(temp[2]))
-			throw;
+		if (temp.size() == 3)
+		{
+			if (Nodes[Center.first - 4][Center.second - 1].pPin != &(temp[0]) || Nodes[Center.first - 4][Center.second].pPin != &(temp[1]) || Nodes[Center.first - 4][Center.second + 1].pPin != &(temp[2]))
+				throw;
+		}
+		else
+		{
+			if (Nodes[Center.first - 4][Center.second].pPin != &(temp[0]))
+				throw;
+		}
+		
 	}
 
 	for (int i = -6; i <= 6; i++)
@@ -302,7 +337,12 @@ void Grid::RemoveConnection(Connection* pConnection)
 				else
 					Nodes[TempX][TempY].pComp = Nodes[TempX + 1][TempY].pComp;
 			}
-			TempY++;
+			
+			if (TempY > Path[Count].second)
+				TempY--;
+			else
+				TempY++;
+
 			if (TempY == Path[Count].second)
 				Count++;
 		}
@@ -322,7 +362,12 @@ void Grid::RemoveConnection(Connection* pConnection)
 				else
 					Nodes[TempX][TempY].pComp = Nodes[TempX + 1][TempY].pComp;
 			}
-			TempX++;
+
+			if (TempX > Path[Count].first)
+				TempX--;
+			else
+				TempX++;
+
 			if (TempX == Path[Count].first)
 				Count++;
 		}

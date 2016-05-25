@@ -44,14 +44,14 @@ std::pair<int,int> Connection::GetCenter() const
 
 void Connection::GetIn(Grid* SimGrid)
 {
-    //SimGrid->AddConnection(this);
+    SimGrid->AddConnection(this);
     m_InputPin->ConnectTo(this);
     m_OutputPin->ConnectTo(this);
 }
 
 void Connection::GetOut(Grid* SimGrid)
 {
-    //SimGrid->RemoveConnection(this);
+    SimGrid->RemoveConnection(this);
     m_InputPin->DeconnectFrom(this);
     m_OutputPin->DeconnectFrom(this);
 }
