@@ -33,7 +33,7 @@ private:
     struct Node
     {
         int ParentX ,ParentY;
-        enum {NOCONNECTION, CONNECTIONFULL, VERTICAL ,HORIZONTAL ,GATE ,PINPOINT ,NOTHING} State;
+		enum { NOCONNECTION, CONNECTIONFULL, VERTICAL, HORIZONTAL, GATE, PINPOINT, NOTHING, CORNER } State;
 		bool Visited;
 		Component* pComp;
 		Pin* pPin;

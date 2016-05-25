@@ -34,7 +34,7 @@ std::vector< std::pair<int,int> > Grid::FindPath(std::pair<int,int> Point1, std:
 		{
 			TempX = TempArrayX[z] + CurrentX;
 			TempY = TempArrayY[z] + CurrentY;
-			if (TempX < SizeX && TempX > 0 && TempY < SizeY  && TempY > 0 && !(Nodes[TempX][TempY].Visited) && Nodes[TempX][TempY].State != Node::GATE && Nodes[TempX][TempY].State != Node::CONNECTIONFULL)
+			if (TempX < SizeX && TempX > 0 && TempY < SizeY  && TempY > 0 && !(Nodes[TempX][TempY].Visited) && Nodes[TempX][TempY].State != Node::GATE && Nodes[TempX][TempY].State != Node::CONNECTIONFULL, Nodes[TempX][TempY].State != Node::CORNER)
 			{
 				if (Nodes[TempX][TempY].State == Node::PINPOINT)
 				{
@@ -217,10 +217,15 @@ void Grid::AddConnection(Connection* pConnection)
 				TempY++;
 
 			if (TempY == Path[Count].second)
+			{
+				if (Nodes[TempX][TempY].State != Node::PINPOINT)
+					Nodes[TempX][TempY].State = Node::CORNER;
 				Count++;
+			}
+				
 		}
 
-		while ((TempX != Path.back().first || TempY != Path.back().second) && TempX != Path[Count].second)
+		while ((TempX != Path.back().first || TempY != Path.back().second) && TempX != Path[Count].first)
 		{
 			if (Nodes[TempX][TempY].State == Grid::Node::NOTHING || Nodes[TempX][TempY].State == Grid::Node::NOCONNECTION)
 				Nodes[TempX][TempY].State = Grid::Node::HORIZONTAL;
@@ -238,7 +243,11 @@ void Grid::AddConnection(Connection* pConnection)
 				TempX++;
 
 			if (TempX == Path[Count].first)
+			{
+				if (Nodes[TempX][TempY].State != Node::PINPOINT)
+					Nodes[TempX][TempY].State = Node::CORNER;
 				Count++;
+			}
 		}
 
 	} while (TempX != Path.back().first || TempY != Path.back().second);

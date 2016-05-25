@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actions\Add.cpp" />
-    <ClCompile Include="Actions\AddComponent.cpp" />
     <ClCompile Include="Actions\AddNewComponent.cpp" />
     <ClCompile Include="Actions\AddNewConnection.cpp" />
     <ClCompile Include="Actions\AdjustOffset.cpp" />
@@ -33,8 +32,6 @@
     <ClCompile Include="Actions\Paste.cpp" />
     <ClCompile Include="Actions\Simulate.cpp" />
     <ClCompile Include="Actions\Stop.cpp" />
-    <ClCompile Include="Actions\TruthTable.cpp" />
-    <ClCompile Include="Actions\Validation.cpp" />
     <ClCompile Include="Actions\ZoomIn.cpp" />
     <ClCompile Include="Actions\ZoomOut.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
@@ -73,7 +70,6 @@
   <ItemGroup>
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\Add.h" />
-    <ClInclude Include="Actions\AddComponent.h" />
     <ClInclude Include="Actions\AddNewComponent.h" />
     <ClInclude Include="Actions\AddNewConnection.h" />
     <ClInclude Include="Actions\AdjustOffset.h" />
@@ -86,8 +82,6 @@
     <ClInclude Include="Actions\Paste.h" />
     <ClInclude Include="Actions\Simulate.h" />
     <ClInclude Include="Actions\Stop.h" />
-    <ClInclude Include="Actions\TruthTable.h" />
-    <ClInclude Include="Actions\Validation.h" />
     <ClInclude Include="Actions\ZoomIn.h" />
     <ClInclude Include="Actions\ZoomOut.h" />
     <ClInclude Include="ApplicationManager.h" />
