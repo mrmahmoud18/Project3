@@ -34,7 +34,7 @@ private:
     {
         int ParentX ,ParentY;
 		enum { NOCONNECTION, CONNECTIONFULL, VERTICAL, HORIZONTAL, GATE, PINPOINT, NOTHING, CORNER } State;
-		bool Visited;
+		bool Visited , BelongToGate;
 		Component* pComp;
 		Pin* pPin;
     };
