@@ -20,6 +20,11 @@ void SWITCH::SetLabel(std::string r_Label)
     m_Label = r_Label;
 }
 
+void SWITCH::SetSignal(Signal r_signal)
+{
+	m_Signal = r_signal;
+}
+
 OutputPin* SWITCH::GetOutputPin()
 {
 	return &m_OutputPin;

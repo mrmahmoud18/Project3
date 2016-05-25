@@ -12,6 +12,7 @@ public:
     SWITCH(const GraphicsInfo &r_GfxInfo, std::string r_Label="");
 	const GraphicsInfo& GetGraphicsInfo() const;
 	void SetLabel(std::string r_Label);
+	void SetSignal(Signal r_signal);
 	OutputPin* GetOutputPin();
 	void SwitchSignal();
 	virtual void Reset();

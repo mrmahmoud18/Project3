@@ -30,7 +30,7 @@ void TruthTable::SetSWITCHesValues(std::string Combination)
 {
 	for (unsigned int i = 0; i < Switches.size(); i++)
 	{
-		Switches[i]->GetOutputPin()->SetStatus((Combination[i] == '0') ? Signal::LOW : Signal::HIGH);
+		Switches[i]->SetSignal((Combination[i] == '0') ? Signal::LOW : Signal::HIGH);
 	}
 }
 
@@ -38,7 +38,7 @@ void TruthTable::GetSWITCHesValues()
 {
 	OriginalSWITCHesData = "";
 	for (unsigned int i = 0; i < Switches.size(); i++)
-		OriginalSWITCHesData += ((Switches[i]->GetOutputPin()->GetStatus() == Signal::HIGH) ? '1' : '0');
+		OriginalSWITCHesData += ((Switches[i]->GetStatus() == ComponentStatus::ON) ? '1' : '0');
 	
 }
 
@@ -46,7 +46,7 @@ void TruthTable::GetLEDsResults()
 {
 	std::string temp = "";
 	for (unsigned int i = 0; i < Leds.size(); i++)
-		temp += ((Leds[i]->GetInputPin()->GetStatus() == Signal::HIGH) ? '1' : '0');
+		temp += ((Leds[i]->GetStatus() == ComponentStatus::ON) ? '1' : '0');
 
 	Results.push_back(temp);
 }
