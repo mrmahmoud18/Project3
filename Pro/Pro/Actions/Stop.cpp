@@ -8,7 +8,8 @@ void Stop::ReadActionParameters() {}
 
 void Stop::Execute()
 {
-    ///TODO
+    pManager->ResetComponents();
+    pManager->GetInterface()->SwitchAppMode();
 }
 
 void Stop::Undo() {}

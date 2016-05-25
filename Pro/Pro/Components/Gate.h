@@ -24,6 +24,9 @@ public:
 	void SetLabel(std::string r_Label);
     std::vector<InputPin>& GetInputPins();
 	OutputPin* GetOutputPin();
+	virtual void Reset();
+	virtual bool IsConnected() const;
+	virtual bool IsReady() const;
 	virtual std::set<Component*> GetAssociatedComponents();
 	virtual void ShiftBy(std::pair<int,int> Delta);
 	virtual std::pair<int,int> GetCenter() const;

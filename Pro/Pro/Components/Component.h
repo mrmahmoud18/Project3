@@ -16,6 +16,9 @@ public:
 	virtual ~Component();
 	void SetStatus(ComponentStatus r_Status);
 	ComponentStatus GetStatus() const;
+	virtual void Reset()=0;
+	virtual bool IsConnected() const=0;
+	virtual bool IsReady() const=0;
 	virtual std::set<Component*> GetAssociatedComponents()=0;
 	virtual void ShiftBy(std::pair<int,int> Delta)=0;
 	virtual std::pair<int,int> GetCenter() const=0;

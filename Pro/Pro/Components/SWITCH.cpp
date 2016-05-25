@@ -7,6 +7,7 @@
 SWITCH::SWITCH(const GraphicsInfo &r_GfxInfo, std::string r_Label): m_GfxInfo(r_GfxInfo), m_OutputPin(std::pair<int,int> (r_GfxInfo.GetX()+10, r_GfxInfo.GetY()+6), 5)
 {
     SetLabel(r_Label);
+    m_Signal = LOW;
 }
 
 const GraphicsInfo& SWITCH::GetGraphicsInfo() const
@@ -24,6 +25,36 @@ OutputPin* SWITCH::GetOutputPin()
 	return &m_OutputPin;
 }
 
+void SWITCH::SwitchSignal()
+{
+    if(m_Signal == LOW)
+    {
+        m_Signal = HIGH;
+        SetStatus(ON);
+    }
+    else
+    {
+        m_Signal = LOW;
+        SetStatus(NORMAL);
+    }
+}
+
+void SWITCH::Reset()
+{
+    SetStatus(NORMAL);
+    m_OutputPin.SetStatus(FLOATING);
+}
+
+bool SWITCH::IsConnected() const
+{
+    return m_OutputPin.IsConnected();
+}
+
+bool SWITCH::IsReady() const
+{
+    return true;
+}
+
 std::set<Component*> SWITCH::GetAssociatedComponents()
 {
     std::vector<Connection*> dummy = m_OutputPin.GetConnections();
@@ -36,6 +67,7 @@ std::set<Component*> SWITCH::GetAssociatedComponents()
 void SWITCH::ShiftBy(std::pair<int,int> Delta)
 {
     m_GfxInfo.ShiftBy(Delta);
+    m_OutputPin.ShiftBy(Delta);
 }
 
 std::pair<int,int> SWITCH::GetCenter() const
@@ -55,7 +87,8 @@ void SWITCH::GetOut(Grid* SimGrid)
 
 void SWITCH::Operate()
 {
-    ///TODO
+    SetStatus((m_Signal == HIGH) ? ON : NORMAL);
+    m_OutputPin.SetStatus(m_Signal);
 }
 
 void SWITCH::Draw(Interface* pInterface) const

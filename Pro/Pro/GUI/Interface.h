@@ -28,6 +28,7 @@ public:
     void DrawGatesBars();
     void EnableButtonWithAction(ActionType ActType);
     void DisableButtonWithAction(ActionType ActType);
+    bool IsSimulating() const;
     void SwitchAppMode();
     void SwitchAppTheme();
     void ZoomIn();

@@ -31,6 +31,8 @@ enum ActionType
     CANVAS_LEFT_CLICK,
     CANVAS_RIGHT_CLICK,
 
+    SWITCH_SIGNAL,
+
     MULTI_SELECT,
 
     DELETE,                //Delete a Component, a Connection
@@ -65,6 +67,7 @@ enum ActionType
 enum ComponentStatus
 {
     NORMAL,
+    ON,
     SELECTED,
     INVALID
 };

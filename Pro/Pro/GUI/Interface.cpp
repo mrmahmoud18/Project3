@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "Output.h"
 
-Interface::Interface(int r_X, int r_Y): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator")
+Interface::Interface(int r_X, int r_Y): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator", sf::Style::Fullscreen)
 {
     Window.setFramerateLimit(0);
     WindowWidth = Window.getSize().x;
@@ -146,6 +146,11 @@ void Interface::DisableButtonWithAction(ActionType ActType)
             dummyVector[j]->SetStatus(Interface::DISABLED);
             break;
         }
+}
+
+bool Interface::IsSimulating() const
+{
+    return AppMode == SIMULATION;
 }
 
 void Interface::SwitchAppMode()

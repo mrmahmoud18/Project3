@@ -8,15 +8,12 @@ void Drag::ReadActionParameters()
 {
 /*
     Base = pManager->GetInterface()->GetMousePosition(true);
-    std::vector<Component*>& Components = pManager->GetComponents();
-    for(unsigned int i = 0; i < Components.size(); i++)
+    Components = pManager->GetSelectedComponents();
+    for(std::set<Component*>::iterator i = Components.begin(); i != Components.end(); i++)
     {
-        if(Components[i]->GetStatus() = SELECTED)
-        {
-            Gate* pGate = dynamic_cast<Gate*> (Components[i]);
-            if(pGate == NULL)
-                Items.insert(Components[i]);
-        }
+        Connection* dummy = dynamic_cast<Connection*>(*i);
+        if (dummy != NULL)
+            Connections.insert(dummy);
     }
 */
 }
@@ -27,7 +24,7 @@ void Drag::Execute()
     pManager->GetInterface()->SetBusy(true);
     while(pManager->GetInterface()->IsDragging())
     {
-        std::pair<int,int> dummy = pManager->GetInterface()->GetMousePosition(true);
+        std::pair<int,int> dummy = pManager->GetInterface()->GetMousePosition();
         pManager->GetInterface()->ShiftOffsetBy(std::pair<int,int> (Base.first-dummy.first, Base.second-dummy.second));
         Base = dummy;
         pManager->UpdateInterface();

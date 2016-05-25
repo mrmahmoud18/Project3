@@ -22,6 +22,21 @@ const std::vector< std::pair<int,int> >& Connection::GetPath()
     return m_Vertices;
 }
 
+void Connection::Reset()
+{
+    SetStatus(NORMAL);
+}
+
+bool Connection::IsConnected() const
+{
+    return m_InputPin->IsConnected() && m_OutputPin->IsConnected();
+}
+
+bool Connection::IsReady() const
+{
+    return m_InputPin->GetStatus() != FLOATING;
+}
+
 std::set<Component*> Connection::GetAssociatedComponents()
 {
     std::set<Component*> dummy;

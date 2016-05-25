@@ -1,9 +1,9 @@
 #include "AddNewConnection.h"
 
 #include "../ApplicationManager.h"
-#include "../Components/Connection.h"
-#include "../Components/InputPin.h"
-#include "../Components/OutputPin.h"
+#include "Connection.h"
+#include "InputPin.h"
+#include "OutputPin.h"
 
 AddNewConnection::AddNewConnection(ApplicationManager *pApp): Action(pApp) {}
 
@@ -11,7 +11,7 @@ void AddNewConnection::ReadActionParameters()
 {
     m_InputPin = pManager->GetPinAt(pManager->GetInterface()->GetMousePosition());
     if(m_InputPin == NULL)
-        throw;
+        return;
     std::pair<int,int> Point;
     do
     {

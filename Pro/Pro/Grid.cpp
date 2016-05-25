@@ -1,9 +1,9 @@
 #include "Grid.h"
 
-#include "Components\Gate.h"
-#include "Components\SWITCH.h"
-#include "Components\LED.h"
-#include "Components\Connection.h"
+#include "Components/Gate.h"
+#include "Components/SWITCH.h"
+#include "Components/LED.h"
+#include "Components/Connection.h"
 
 Grid::Grid(int r_X, int r_Y): Nodes(r_X, std::vector<Node> (r_Y))
 {
@@ -97,7 +97,7 @@ void Grid::AddGate(Gate* pGate)
 		}
 
 	Nodes[Center.first + 4][Center.second].State = Node::PINPOINT;
-	
+
 	Nodes[Center.first + 4][Center.second].pPin = pGate->GetOutputPin();
 	Nodes[Center.first + 4][Center.second].pComp = pGate;
 	std::vector<InputPin>& temp = pGate->GetInputPins();
@@ -135,7 +135,7 @@ void Grid::AddGate(Gate* pGate)
 			Nodes[Center.first - 4][Center.second].pPin = &(temp[0]);
 			Nodes[Center.first - 4][Center.second].pComp = pGate;
 		}
-		
+
 	}
 
 	for (int i = -6; i <= 6; i++)
@@ -145,7 +145,7 @@ void Grid::AddGate(Gate* pGate)
 			if (Nodes[i + Center.first][j + Center.second].State == Node::NOTHING)
 				Nodes[i + Center.first][j + Center.second].State = Node::NOCONNECTION;
 		}
-			
+
 }
 
 void Grid::AddSWITCH(SWITCH* pSWITCH)
@@ -223,7 +223,7 @@ void Grid::AddConnection(Connection* pConnection)
 			{
 				Nodes[TempX][TempY].pComp = NULL;
 				Nodes[TempX][TempY].State = Node::CONNECTIONFULL;
-			}		
+			}
 
 			(TempY > Path[Count].second) ? TempY-- : TempY++;
 
@@ -236,7 +236,7 @@ void Grid::AddConnection(Connection* pConnection)
 				}
 				Count++;
 			}
-				
+
 		}
 
 		while ((TempX != Path.back().first || TempY != Path.back().second) && TempX != Path[Count].first)
@@ -292,7 +292,7 @@ void Grid::RemoveGate(Gate* pGate)
 			if (Nodes[Center.first - 4][Center.second].pPin != &(temp[0]))
 				throw;
 		}
-		
+
 	}
 
 	for (int i = -6; i <= 6; i++)
@@ -305,7 +305,7 @@ void Grid::RemoveGate(Gate* pGate)
 				Nodes[i + Center.first][j + Center.second].pComp = NULL;
 				Nodes[i + Center.first][j + Center.second].pPin = NULL;
 			}
-		}	
+		}
 }
 
 void Grid::RemoveSWITCH(SWITCH* pSWITCH)
@@ -367,13 +367,13 @@ void Grid::RemoveConnection(Connection* pConnection)
 				else
 					Nodes[TempX][TempY].pComp = Nodes[TempX + 1][TempY].pComp;
 			}
-				
+
 			if (Nodes[TempX][TempY].State == Node::VERTICAL || Nodes[TempX][TempY].State == Node::CORNER)
 			{
 				Nodes[TempX][TempY].State = (Nodes[TempX][TempY].BelongToGate) ? Node::NOCONNECTION : Node::NOTHING;
 				Nodes[TempX][TempY].pComp = NULL;
 			}
-			
+
 			(TempY > Path[Count].second) ? TempY-- : TempY++;
 
 			if (TempY == Path[Count].second)
@@ -390,7 +390,7 @@ void Grid::RemoveConnection(Connection* pConnection)
 				else
 					Nodes[TempX][TempY].pComp = Nodes[TempX + 1][TempY].pComp;
 			}
-	
+
 			if (Nodes[TempX][TempY].State == Node::HORIZONTAL || Nodes[TempX][TempY].State == Node::CORNER)
 			{
 				Nodes[TempX][TempY].State = (Nodes[TempX][TempY].BelongToGate) ? Node::NOCONNECTION : Node::NOTHING;

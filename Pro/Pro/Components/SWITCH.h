@@ -13,6 +13,10 @@ public:
 	const GraphicsInfo& GetGraphicsInfo() const;
 	void SetLabel(std::string r_Label);
 	OutputPin* GetOutputPin();
+	void SwitchSignal();
+	virtual void Reset();
+	virtual bool IsConnected() const;
+	virtual bool IsReady() const;
 	virtual std::set<Component*> GetAssociatedComponents();
 	virtual void ShiftBy(std::pair<int,int> Delta);
 	virtual std::pair<int,int> GetCenter() const;
@@ -26,5 +30,6 @@ private:
     GraphicsInfo m_GfxInfo;
     std::string m_Label;
 	OutputPin m_OutputPin;
+	Signal m_Signal;
 };
 

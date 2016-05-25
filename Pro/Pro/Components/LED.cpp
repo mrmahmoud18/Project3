@@ -24,6 +24,22 @@ InputPin* LED::GetInputPin()
 	return &m_InputPin;
 }
 
+void LED::Reset()
+{
+    SetStatus(NORMAL);
+    m_InputPin.SetStatus(FLOATING);
+}
+
+bool LED::IsConnected() const
+{
+    return m_InputPin.IsConnected();
+}
+
+bool LED::IsReady() const
+{
+    return m_InputPin.GetStatus() != FLOATING;
+}
+
 std::set<Component*> LED::GetAssociatedComponents()
 {
     std::set<Component*> AssociatedComponents;
@@ -35,6 +51,7 @@ std::set<Component*> LED::GetAssociatedComponents()
 void LED::ShiftBy(std::pair<int,int> Delta)
 {
     m_GfxInfo.ShiftBy(Delta);
+    m_InputPin.ShiftBy(Delta);
 }
 
 std::pair<int,int> LED::GetCenter() const
@@ -54,7 +71,10 @@ void LED::GetOut(Grid* SimGrid)
 
 void LED::Operate()
 {
-    ///TODO
+    if(m_InputPin.GetStatus() == HIGH)
+        SetStatus(ON);
+    else
+        SetStatus(NORMAL);
 }
 
 void LED::Draw(Interface* pInterface) const

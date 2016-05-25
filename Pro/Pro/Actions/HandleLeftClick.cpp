@@ -16,16 +16,23 @@ void HandleLeftClick::Execute()
     ReadActionParameters();
     if(pManager->GetInterface()->IsDoubleClick())
     {
-        printf("%s \n", "HELL YEAH!");
+        ///NOT READY
     }
     else if(pManager->GetInterface()->IsDragging())
     {
         if(pManager->GetInterface()->IsCtrlOn())
             pManager->ExecuteAction(ADJUST_OFFSET);
-        else if(pComp != NULL)
-            pManager->ExecuteAction(DRAG);
-        else
-            pManager->ExecuteAction(MULTI_SELECT);
+        else if(!pManager->GetInterface()->IsSimulating())
+        {
+            if(pComp != NULL)
+                pManager->ExecuteAction(DRAG);
+            else
+                pManager->ExecuteAction(MULTI_SELECT);
+        }
+    }
+    else if(pManager->GetInterface()->IsSimulating())
+    {
+        pManager->ExecuteAction(SWITCH_SIGNAL);
     }
     else
     {

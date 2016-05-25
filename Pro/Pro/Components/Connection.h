@@ -17,6 +17,9 @@ public:
 	Connection(Pin* r_InputPin, Pin* r_OutputPin, const std::vector< std::pair<int,int> >& r_Vertices);
 	void Update(const std::vector< std::pair<int,int> >& r_Vertices);
 	const std::vector< std::pair<int,int> >& GetPath();
+	virtual void Reset();
+	virtual bool IsConnected() const;
+	virtual bool IsReady() const;
 	virtual std::set<Component*> GetAssociatedComponents();
 	virtual void ShiftBy(std::pair<int,int> Delta);
 	virtual std::pair<int,int> GetCenter() const;

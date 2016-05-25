@@ -93,13 +93,16 @@ void Output::DrawComponent(const GraphicsInfo& GfxInfo, std::string ImagePath, C
     switch(r_Status)
     {
     case NORMAL:
-        DrawImage(GfxInfo, "Components/"+ImagePath+"/1" );
+        DrawImage(GfxInfo, "Components/"+ImagePath+"/1");
         break;
     case SELECTED:
-        DrawImage(GfxInfo, "Components/"+ImagePath+"/2" );
+        DrawImage(GfxInfo, "Components/"+ImagePath+"/2");
         break;
     case INVALID:
-        DrawImage(GfxInfo, "Components/"+ImagePath+"/3" );
+        DrawImage(GfxInfo, "Components/"+ImagePath+"/3");
+        break;
+    case ON:
+        DrawImage(GfxInfo, "Components/"+ImagePath+"/4");
         break;
     }
 }

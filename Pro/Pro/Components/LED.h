@@ -13,6 +13,9 @@ public:
 	const GraphicsInfo& GetGraphicsInfo() const;
 	void SetLabel(std::string r_Label);
 	InputPin* GetInputPin();
+	virtual void Reset();
+	virtual bool IsConnected() const;
+	virtual bool IsReady() const;
 	virtual std::set<Component*> GetAssociatedComponents();
 	virtual void ShiftBy(std::pair<int,int> Delta);
 	virtual std::pair<int,int> GetCenter() const;

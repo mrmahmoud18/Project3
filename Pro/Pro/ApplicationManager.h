@@ -53,6 +53,7 @@ public:
 	void AddComponent(Component* ToBeAdded);
 	void RemoveComponent(Component* ToBeRemoved);
 
+	bool AreComponentsConnected();
 	bool SimulateComponents();
 	void SaveComponents();
 };

@@ -32,6 +32,7 @@
     <ClCompile Include="Actions\Paste.cpp" />
     <ClCompile Include="Actions\Simulate.cpp" />
     <ClCompile Include="Actions\Stop.cpp" />
+    <ClCompile Include="Actions\SwitchSignal.cpp" />
     <ClCompile Include="Actions\TruthTable.cpp" />
     <ClCompile Include="Actions\ZoomIn.cpp" />
     <ClCompile Include="Actions\ZoomOut.cpp" />
@@ -83,6 +84,7 @@
     <ClInclude Include="Actions\Paste.h" />
     <ClInclude Include="Actions\Simulate.h" />
     <ClInclude Include="Actions\Stop.h" />
+    <ClInclude Include="Actions\SwitchSignal.h" />
     <ClInclude Include="Actions\TruthTable.h" />
     <ClInclude Include="Actions\ZoomIn.h" />
     <ClInclude Include="Actions\ZoomOut.h" />

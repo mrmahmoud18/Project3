@@ -25,6 +25,32 @@ OutputPin* Gate::GetOutputPin()
     return &m_OutputPin;
 }
 
+void Gate::Reset()
+{
+    SetStatus(NORMAL);
+    m_OutputPin.SetStatus(FLOATING);
+    for(unsigned int i = 0; i < m_InputPins.size(); i++)
+        m_InputPins[i].SetStatus(FLOATING);
+}
+
+bool Gate::IsConnected() const
+{
+    if(!m_OutputPin.IsConnected())
+        return false;
+    for(unsigned int i = 0; i < m_InputPins.size(); i++)
+        if(!m_InputPins[i].IsConnected())
+            return false;
+    return true;
+}
+
+bool Gate::IsReady() const
+{
+    for(unsigned int i = 0; i < m_InputPins.size(); i++)
+        if(m_InputPins[i].GetStatus() == FLOATING)
+            return false;
+    return true;
+}
+
 std::set<Component*> Gate::GetAssociatedComponents()
 {
     std::vector<Connection*> dummy = m_OutputPin.GetConnections();

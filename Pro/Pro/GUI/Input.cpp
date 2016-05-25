@@ -116,7 +116,7 @@ ActionType Input::GetUserAction() const
                     return CANVAS_LEFT_CLICK;
                 return ACTIVE_BAR_CLICK;
             }
-            if(dummyEvent.mouseButton.button == sf::Mouse::Right)
+            if(dummyEvent.mouseButton.button == sf::Mouse::Right && pInterface->SimCanvas->GetGraphicsInfo().Contains(dummyEvent.mouseButton.x, dummyEvent.mouseButton.y))
                 return CANVAS_RIGHT_CLICK;
             break;
         case sf::Event::MouseWheelScrolled:
@@ -127,9 +127,9 @@ ActionType Input::GetUserAction() const
             }
             break;
         case sf::Event::KeyPressed:
-            if(dummyEvent.key.code == sf::Keyboard::Add)
+            if(dummyEvent.key.code == sf::Keyboard::Add && dummyEvent.key.control)
                 return ZOOM_IN;
-            else if(dummyEvent.key.code == sf::Keyboard::Subtract)
+            else if(dummyEvent.key.code == sf::Keyboard::Subtract && dummyEvent.key.control)
                 return ZOOM_OUT;
             else if(dummyEvent.key.code == sf::Keyboard::X && dummyEvent.key.control)
                 return CUT;

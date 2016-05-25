@@ -10,6 +10,7 @@
 #include "Actions/Paste.h"
 #include "Actions/HandleLeftClick.h"
 #include "Actions/HandleActiveBar.h"
+#include "Actions/SwitchSignal.h"
 #include "Actions/Simulate.h"
 #include "Actions/Stop.h"
 #include "Actions/AdjustOffset.h"
@@ -19,7 +20,7 @@
 #include "Components/SWITCH.h"
 #include "Components/LED.h"
 
-#include <numeric>
+#include <algorithm>
 
 ApplicationManager::ApplicationManager(): MainInterface(360, 360), SimGrid(360, 360) {}
 
@@ -29,6 +30,10 @@ ApplicationManager::~ApplicationManager()
         delete Components[i];
     for(unsigned int i = 0; i < Clipboard.size(); i++)
         delete Clipboard[i];
+    for(unsigned int i = 0; i < DoneActions.size(); i++)
+        delete DoneActions[i];
+    for(unsigned int i = 0; i < UndoneActions.size(); i++)
+        delete UndoneActions[i];
 }
 
 ActionType ApplicationManager::GetUserAction()
@@ -63,6 +68,9 @@ void ApplicationManager::ExecuteAction(ActionType Act)
         dummyAction = new HandleLeftClick(this);
         break;
 	case CANVAS_RIGHT_CLICK:
+        break;
+    case SWITCH_SIGNAL:
+        dummyAction = new SwitchSignal(this);
         break;
     case MULTI_SELECT:
         break;
@@ -175,6 +183,9 @@ Interface* ApplicationManager::GetInterface()
 void ApplicationManager::AddCompletedAction(Action* pAction)
 {
     DoneActions.push_back(pAction);
+    for(unsigned int i = 0; i < UndoneActions.size(); i++)
+        delete UndoneActions[i];
+    UndoneActions.clear();
 }
 
 void ApplicationManager::UndoAction()
@@ -275,7 +286,7 @@ std::set<Component*> ApplicationManager::GetSelectedComponents()
 void ApplicationManager::ResetComponents()
 {
     for(unsigned int i = 0; i < Components.size(); i++)
-        Components[i]->SetStatus(NORMAL);
+        Components[i]->Reset();
 }
 
 void ApplicationManager::AddComponent(Component* ToBeAdded)
@@ -293,14 +304,22 @@ void ApplicationManager::RemoveComponent(Component* ToBeRemoved)
     ToBeRemoved->GetOut(&SimGrid);
 }
 
+bool ApplicationManager::AreComponentsConnected()
+{
+    for(unsigned int i = 0; i < Components.size(); i++)
+        if(!Components[i]->IsConnected())
+            return false;
+    return true;
+}
+
 bool ApplicationManager::SimulateComponents()
 {
-	std::vector<bool>IsOperated(Components.size(), false);
+	std::vector<bool> IsOperated(Components.size(), false);
 	bool Infiniteloop = true;
 	do
 	{
 		for (unsigned int i = 0; i < Components.size(); i++)
-			if (!IsOperated[i] /*&& Components[i]->IsValidToOperate()*/) ///switched
+			if (!IsOperated[i] && Components[i]->IsReady())
 			{
 				Infiniteloop = false;
 				Components[i]->Operate();
@@ -310,7 +329,7 @@ bool ApplicationManager::SimulateComponents()
 			return false;
 		else
 			Infiniteloop = true;
-	} while (std::accumulate(IsOperated.begin(), IsOperated.end(), 0) != Components.size());
+	} while (std::find(IsOperated.begin(), IsOperated.end(), false) != IsOperated.end());
 	return true;
 }
 
