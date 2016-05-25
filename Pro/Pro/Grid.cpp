@@ -1,9 +1,9 @@
 #include "Grid.h"
 
-#include "Gate.h"
-#include "SWITCH.h"
-#include "LED.h"
-#include "Connection.h"
+#include "Components\Gate.h"
+#include "Components\SWITCH.h"
+#include "Components\LED.h"
+#include "Components\Connection.h"
 
 Grid::Grid(int r_X, int r_Y): Nodes(r_X, std::vector<Node> (r_Y))
 {

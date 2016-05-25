@@ -2,6 +2,7 @@
 #include "Action.h"
 
 #include<string>
+#include<vector>
 
 class LED;
 class SWITCH;

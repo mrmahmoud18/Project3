@@ -14,10 +14,10 @@ Validation::~Validation()
 
 void Validation::Execute()
 {
-	if (!pManager->IsValidToSimulate())
+	/*if (!pManager->IsValidToSimulate())
 	{
 		throw;
-	} 
+	} */
 }
 
 void Validation::ReadActionParameters()

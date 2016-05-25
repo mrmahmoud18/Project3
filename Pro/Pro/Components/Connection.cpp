@@ -3,7 +3,7 @@
 #include "../ApplicationManager.h"
 #include "../Grid.h"
 #include "Pin.h"
-#include "Interface.h"
+#include "../GUI/Interface.h"
 
 Connection::Connection(Pin* r_InputPin, Pin* r_OutputPin, const std::vector< std::pair<int,int> >& r_Vertices)
 {

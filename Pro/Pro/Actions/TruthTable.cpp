@@ -7,8 +7,8 @@
 
 void TruthTable::ReadActionParameters()
 {
-	Switches = pManager->GetSWITCH();
-	Leds = pManager->GetLED();
+	Switches = pManager->GetSWITCHs();
+	Leds = pManager->GetLEDs();
 }
 
 void TruthTable::CreateAllCombinations(std::string s)
@@ -17,7 +17,7 @@ void TruthTable::CreateAllCombinations(std::string s)
 	{
 		SetSWITCHValues(s);
 		Combinations.push_back(s);
-		pManager->Simulate();
+		pManager->SimulateComponents();
 		GetLEDResults();
 		return;
 	}
@@ -31,11 +31,11 @@ void TruthTable::SetSWITCHValues(std::string Combination)
 	{
 		if (Combination[i]=='0')
 		{
-			Switches[i]->GetOutputPin()->SetStatus(Pin::LOW);
+			Switches[i]->GetOutputPin()->SetStatus(LOW);
 		}
 		else
 		{
-			Switches[i]->GetOutputPin()->SetStatus(Pin::HIGH);
+			Switches[i]->GetOutputPin()->SetStatus(HIGH);
 		}
 	}
 }
