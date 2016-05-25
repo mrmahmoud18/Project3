@@ -66,7 +66,7 @@ void TruthTable::CreateTable()
 		}
 		for (unsigned int j = Switches.size(); j < Leds.size() + Switches.size(); j++)
 		{
-			Table[k][j] = Results[k - 1][j];
+			Table[k][j] = Results[k - 1][j - Switches.size()];
 		}
 	}
 }
@@ -74,7 +74,7 @@ void TruthTable::CreateTable()
 void TruthTable::PrintTruthTableInFile()
 {
 	std::ofstream Out;
-	Out.open("Truth_Table");
+	Out.open("Truth_Table.txt");
 	if (! Out.is_open())
 		throw;
 
@@ -82,7 +82,7 @@ void TruthTable::PrintTruthTableInFile()
 	{
 		for (unsigned int j = 0; j < Table[0].size(); j++)
 		{
-			Out << Table[i][j] << std::setw(5);
+			Out << Table[i][j] << std::setw(5) << "  ";
 		}
 		Out << std::endl;
 	}
@@ -104,18 +104,18 @@ void TruthTable::Execute()
 	ReadActionParameters();
 	for (unsigned int i = 0; i < Switches.size(); i++)
 	{
-		//Lables.push_back( Switches[i]->)
-		// TODO GET the lables
+		Lables.push_back(Switches[i]->GetLable());
 	}
 	for (unsigned int i = 0; i < Leds.size(); i++)
 	{
-		//TODO get the lables of the leds
+		Lables.push_back(Leds[i]->GetLable());
 	}
 	GetSWITCHesValues();
 	pManager->ResetComponents();
 	CreateAllCombinations();
 	CreateTable();
 	SetSWITCHesValues(OriginalSWITCHesData);
+	pManager->ResetComponents();
 	pManager->SimulateComponents();
 	PrintTruthTableInFile();
 }

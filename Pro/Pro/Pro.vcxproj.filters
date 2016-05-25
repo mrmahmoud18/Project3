@@ -316,6 +316,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Truth_Table" />
+    <Text Include="Truth_Table.txt" />
   </ItemGroup>
 </Project>

@@ -25,6 +25,8 @@ const std::vector< std::pair<int,int> >& Connection::GetPath()
 void Connection::Reset()
 {
     SetStatus(NORMAL);
+	m_InputPin->SetStatus(Signal::FLOATING);
+	m_OutputPin->SetStatus(Signal::FLOATING);
 }
 
 bool Connection::IsConnected() const
@@ -69,6 +71,11 @@ void Connection::GetOut(Grid* SimGrid)
     SimGrid->RemoveConnection(this);
     m_InputPin->DeconnectFrom(this);
     m_OutputPin->DeconnectFrom(this);
+}
+
+std::string Connection::GetLable()
+{
+	return std::string();
 }
 
 void Connection::Operate()
