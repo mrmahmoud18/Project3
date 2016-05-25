@@ -208,7 +208,8 @@ void Grid::AddConnection(Connection* pConnection)
 			if (Nodes[TempX][TempY].pComp == NULL)
 				Nodes[TempX][TempY].pComp = pConnection;
 			else
-				Nodes[TempX][TempY].pComp = NULL;
+				if (Nodes[TempX][TempY].State != Node::PINPOINT)
+					Nodes[TempX][TempY].pComp = NULL;
 
 			if (TempY > Path[Count].second)
 				TempY--;
@@ -228,7 +229,8 @@ void Grid::AddConnection(Connection* pConnection)
 			if (Nodes[TempX][TempY].pComp == NULL)
 				Nodes[TempX][TempY].pComp = pConnection;
 			else
-				Nodes[TempX][TempY].pComp = NULL;
+				if (Nodes[TempX][TempY].State != Node::PINPOINT)
+					Nodes[TempX][TempY].pComp = NULL;
 
 			if (TempX > Path[Count].first)
 				TempX--;
