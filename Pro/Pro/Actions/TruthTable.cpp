@@ -99,6 +99,7 @@ TruthTable::~TruthTable()
 
 void TruthTable::Execute()
 {
+	ReadActionParameters();
 	for (unsigned int i = 0; i < Switches.size(); i++)
 	{
 		//Lables.push_back( Switches[i]->)
