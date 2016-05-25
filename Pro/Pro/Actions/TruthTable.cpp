@@ -82,7 +82,11 @@ void TruthTable::PrintTruthTableInFile()
 	{
 		for (unsigned int j = 0; j < Table[0].size(); j++)
 		{
-			Out << Table[i][j] << std::setw(5) << "  ";
+			Out << Table[i][j] << std::setw(10);
+			if (j == Switches.size() - 1)
+			{
+				Out << "|";
+			}
 		}
 		Out << std::endl;
 	}
