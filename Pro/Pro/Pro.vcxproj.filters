@@ -156,6 +156,9 @@
     <ClCompile Include="Components\XOR3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\TruthTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grid.h">
@@ -300,6 +303,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\XOR3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\TruthTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

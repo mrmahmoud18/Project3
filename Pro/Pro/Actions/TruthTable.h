@@ -12,15 +12,17 @@ class TruthTable :public Action
 private:
 	virtual void ReadActionParameters();
 	void CreateAllCombinations(std::string s = "");
-	void SetSWITCHValues(std::string Combination);
-	void GetLEDResults();
+	void SetSWITCHesValues(std::string Combination);
+	void GetSWITCHesValues();
+	void GetLEDsResults();
 	void CreateTable();
 	std::vector<SWITCH*>Switches;
 	std::vector<LED*>Leds;
 	std::vector<std::string>Combinations;
 	std::vector<std::string>Lables;
 	std::vector<std::string>Results;
-	std::vector<std::vector <std::string> >Table;
+	std::vector<std::vector<std::string> >Table;
+	std::vector<std::string>OriginalSwitchData;
 public:
 	TruthTable(ApplicationManager * pApp);
 	~TruthTable();
