@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "Output.h"
 
-Interface::Interface(int r_X, int r_Y): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator", sf::Style::Fullscreen)
+Interface::Interface(int r_X, int r_Y) : Window(sf::VideoMode::getDesktopMode(), "Logic Simulator")
 {
     Window.setFramerateLimit(0);
     WindowWidth = Window.getSize().x;

@@ -121,6 +121,9 @@
     <ClInclude Include="GUI\Interface.h" />
     <ClInclude Include="GUI\Output.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Truth_Table" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B544A92A-C6A7-4BC1-87C8-0A5AB463559F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

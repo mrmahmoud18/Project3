@@ -69,6 +69,11 @@ void LED::GetOut(Grid* SimGrid)
     SimGrid->RemoveLED(this);
 }
 
+std::string LED::GetLable()
+{
+	return m_Label;
+}
+
 void LED::Operate()
 {
     if(m_InputPin.GetStatus() == HIGH)

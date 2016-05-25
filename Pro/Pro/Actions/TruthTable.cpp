@@ -19,6 +19,7 @@ void TruthTable::CreateAllCombinations(std::string s)
 		Combinations.push_back(s);
 		pManager->SimulateComponents();
 		GetLEDsResults();
+		pManager->ResetComponents();
 		return;
 	}
 	CreateAllCombinations(s + "0");
@@ -37,14 +38,15 @@ void TruthTable::GetSWITCHesValues()
 {
 	OriginalSWITCHesData = "";
 	for (unsigned int i = 0; i < Switches.size(); i++)
-		OriginalSWITCHesData + ((Switches[i]->GetStatus() == Signal::HIGH) ? '1' : '0');
+		OriginalSWITCHesData += ((Switches[i]->GetOutputPin()->GetStatus() == Signal::HIGH) ? '1' : '0');
+	
 }
 
 void TruthTable::GetLEDsResults()
 {
 	std::string temp = "";
 	for (unsigned int i = 0; i < Leds.size(); i++)
-		temp + ((Leds[i]->GetStatus() == Signal::HIGH) ? '1' : '0');
+		temp += ((Leds[i]->GetInputPin()->GetStatus() == Signal::HIGH) ? '1' : '0');
 
 	Results.push_back(temp);
 }
@@ -110,7 +112,9 @@ void TruthTable::Execute()
 		//TODO get the lables of the leds
 	}
 	GetSWITCHesValues();
+	pManager->ResetComponents();
 	CreateAllCombinations();
+	CreateTable();
 	SetSWITCHesValues(OriginalSWITCHesData);
 	pManager->SimulateComponents();
 	PrintTruthTableInFile();

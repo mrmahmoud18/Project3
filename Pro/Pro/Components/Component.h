@@ -24,6 +24,7 @@ public:
 	virtual std::pair<int,int> GetCenter() const=0;
 	virtual void GetIn(Grid* SimGrid)=0;
 	virtual void GetOut(Grid* SimGrid)=0;
+	virtual std::string GetLable() = 0;
 	virtual void Operate()=0;
 	virtual void Draw(Interface* pInterface) const=0;
 	virtual void Copy(ApplicationManager* pManager) const=0;

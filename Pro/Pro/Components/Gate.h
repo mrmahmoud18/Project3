@@ -32,4 +32,5 @@ public:
 	virtual std::pair<int,int> GetCenter() const;
 	virtual void GetIn(Grid* SimGrid);
 	virtual void GetOut(Grid* SimGrid);
+	virtual std::string GetLable();
 };

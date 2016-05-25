@@ -85,6 +85,11 @@ void SWITCH::GetOut(Grid* SimGrid)
     SimGrid->RemoveSWITCH(this);
 }
 
+std::string SWITCH::GetLable()
+{
+	return m_Label;
+}
+
 void SWITCH::Operate()
 {
     SetStatus((m_Signal == HIGH) ? ON : NORMAL);

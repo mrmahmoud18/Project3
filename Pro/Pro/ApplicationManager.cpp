@@ -16,6 +16,7 @@
 #include "Actions/AdjustOffset.h"
 #include "Actions/ZoomIn.h"
 #include "Actions/ZoomOut.h"
+#include "Actions\TruthTable.h"
 #include "Components/Component.h"
 #include "Components/SWITCH.h"
 #include "Components/LED.h"
@@ -59,6 +60,7 @@ void ApplicationManager::ExecuteAction(ActionType Act)
         MainInterface.PrintMsg("Edit Label");
         break;
 	case CREATE_TRUTHTABLE:
+		dummyAction = new TruthTable(this);
         MainInterface.PrintMsg("Create TruthTable");
         break;
     case ACTIVE_BAR_CLICK:

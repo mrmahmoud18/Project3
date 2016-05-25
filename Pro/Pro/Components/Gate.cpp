@@ -85,3 +85,8 @@ void Gate::GetOut(Grid* SimGrid)
 {
     SimGrid->RemoveGate(this);
 }
+
+std::string Gate::GetLable()
+{
+	return m_Label;
+}

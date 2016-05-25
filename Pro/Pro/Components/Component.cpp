@@ -16,3 +16,4 @@ ComponentStatus Component::GetStatus() const
 {
     return m_Status;
 }
+
