@@ -7,14 +7,12 @@ Component::Component()
 
 Component::~Component() {}
 
-void Component::SetStatus(Status r_Status)
+void Component::SetStatus(ComponentStatus r_Status)
 {
     m_Status = r_Status;
 }
 
-Component::Status Component::GetStatus()
+ComponentStatus Component::GetStatus() const
 {
     return m_Status;
 }
-
-

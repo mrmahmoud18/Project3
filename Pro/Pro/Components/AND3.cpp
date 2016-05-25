@@ -1,5 +1,6 @@
 #include "AND3.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 AND3::AND3(const GraphicsInfo & r_GfxInfo, std::string r_Label): Gate(r_GfxInfo, 5)
@@ -13,17 +14,15 @@ AND3::AND3(const GraphicsInfo & r_GfxInfo, std::string r_Label): Gate(r_GfxInfo,
 void AND3::Operate()
 {
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::LOW)
+		if (m_InputPins[i].GetStatus() == LOW)
 		{
-			m_OutputPin.SetStatus(Pin::LOW);
+			m_OutputPin.SetStatus(LOW);
 			return;
 		}
-	}
-	m_OutputPin.SetStatus(Pin::HIGH);
+	m_OutputPin.SetStatus(HIGH);
 }
 
-void AND3::Draw(Interface * pInterface)
+void AND3::Draw(Interface * pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "AND3", GetStatus());
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -31,3 +30,7 @@ void AND3::Draw(Interface * pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
+void AND3::Copy(ApplicationManager* pManager) const
+{
+    pManager->PushIntoClipboard(new AND3(*this));
+}

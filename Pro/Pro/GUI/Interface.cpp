@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "Output.h"
 
-Interface::Interface(): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator")
+Interface::Interface(int r_X, int r_Y): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator", sf::Style::Fullscreen)
 {
     Window.setFramerateLimit(0);
     WindowWidth = Window.getSize().x;
@@ -28,6 +28,9 @@ Interface::Interface(): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator
 	AppMode = DESIGN;
     GridSize = 10;
     PinRadius = 4;
+
+    SizeX = r_X;
+    SizeY = r_Y;
 	Zoom = 2;
 	Offset.first = 0;
 	Offset.second = 0;
@@ -40,38 +43,37 @@ Interface::Interface(): Window(sf::VideoMode::getDesktopMode(), "Logic Simulator
     GatesBar = new Bar(GraphicsInfo(ToolBarWidth+BorderSize, 0, WindowWidth-ToolBarWidth-BorderSize, GatesBarHeight), Bar::HORIZONTAL, Spacing);
     NGatesBar = new Bar(GraphicsInfo(ToolBarWidth+BorderSize, GatesBarHeight, WindowWidth-ToolBarWidth-BorderSize, GatesBarHeight), Bar::HORIZONTAL, Spacing);
     SimCanvas = new Canvas(GraphicsInfo(ToolBarWidth+BorderSize, 0, WindowWidth-ToolBarWidth-BorderSize, WindowHeight-StatusBarHeight-BorderSize));
-    DesignBar->AddButton("add", Action::ADD);
-    DesignBar->AddButton("delete", Action::DELETE, Button::DISABLED);
-    DesignBar->AddButton("copy", Action::COPY, Button::DISABLED);
-    DesignBar->AddButton("cut", Action::CUT, Button::DISABLED);
-    DesignBar->AddButton("paste", Action::PASTE, Button::DISABLED);
-    DesignBar->AddButton("undo", Action::UNDO, Button::DISABLED);
-    DesignBar->AddButton("redo", Action::REDO, Button::DISABLED);
-    DesignBar->AddButton("save", Action::SAVE);
-    DesignBar->AddButton("load", Action::LOAD);
-    DesignBar->AddButton("simulate", Action::SWITCH_MODE);
-    DesignBar->AddButton("color", Action::SWITCH_THEME);
-    DesignBar->AddButton("exit", Action::EXIT);
-    SimulationBar->AddButton("table", Action::CREATE_TRUTHTABLE);
-    SimulationBar->AddButton("stop", Action::SWITCH_MODE, Button::NORMAL, 8);
-    SimulationBar->AddButton("color", Action::SWITCH_THEME);
-    SimulationBar->AddButton("exit", Action::EXIT);
-    GatesBar->AddButton("BUFFER", Action::ADD_BUFF);
-    NGatesBar->AddButton("NOT", Action::ADD_INV);
-    GatesBar->AddButton("AND2", Action::ADD_AND_GATE_2);
-    NGatesBar->AddButton("NAND2", Action::ADD_NAND_GATE_2);
-    GatesBar->AddButton("OR2", Action::ADD_OR_GATE_2);
-    NGatesBar->AddButton("NOR2", Action::ADD_NOR_GATE_2);
-    GatesBar->AddButton("XOR2", Action::ADD_XOR_GATE_2);
-    NGatesBar->AddButton("XNOR2", Action::ADD_XNOR_GATE_2);
-    GatesBar->AddButton("AND3", Action::ADD_AND_GATE_3);
-    NGatesBar->AddButton("NAND3", Action::ADD_NAND_GATE_3);
-    GatesBar->AddButton("OR3", Action::ADD_OR_GATE_3);
-    NGatesBar->AddButton("NOR3", Action::ADD_NOR_GATE_3);
-    GatesBar->AddButton("XOR3", Action::ADD_XOR_GATE_3);
-    NGatesBar->AddButton("XNOR3", Action::ADD_XNOR_GATE_3);
-    GatesBar->AddButton("SWITCH", Action::ADD_SWITCH);
-    NGatesBar->AddButton("LED", Action::ADD_LED);
+    DesignBar->AddButton("add", ADD);
+    DesignBar->AddButton("delete", DELETE, Interface::DISABLED);
+    DesignBar->AddButton("copy", COPY, Interface::DISABLED);
+    DesignBar->AddButton("cut", CUT, Interface::DISABLED);
+    DesignBar->AddButton("undo", UNDO, Interface::DISABLED);
+    DesignBar->AddButton("redo", REDO, Interface::DISABLED);
+    DesignBar->AddButton("save", SAVE);
+    DesignBar->AddButton("load", LOAD);
+    DesignBar->AddButton("simulate", SIMULATE);
+    DesignBar->AddButton("color", SWITCH_THEME);
+    DesignBar->AddButton("exit", EXIT);
+    SimulationBar->AddButton("table", CREATE_TRUTHTABLE);
+    SimulationBar->AddButton("stop", STOP, Interface::NORMAL, 7);
+    SimulationBar->AddButton("color", SWITCH_THEME);
+    SimulationBar->AddButton("exit", EXIT);
+    GatesBar->AddButton("BUFFER", ADD_BUFF);
+    NGatesBar->AddButton("NOT", ADD_INV);
+    GatesBar->AddButton("AND2", ADD_AND_GATE_2);
+    NGatesBar->AddButton("NAND2", ADD_NAND_GATE_2);
+    GatesBar->AddButton("OR2", ADD_OR_GATE_2);
+    NGatesBar->AddButton("NOR2", ADD_NOR_GATE_2);
+    GatesBar->AddButton("XOR2", ADD_XOR_GATE_2);
+    NGatesBar->AddButton("XNOR2", ADD_XNOR_GATE_2);
+    GatesBar->AddButton("AND3", ADD_AND_GATE_3);
+    NGatesBar->AddButton("NAND3", ADD_NAND_GATE_3);
+    GatesBar->AddButton("OR3", ADD_OR_GATE_3);
+    NGatesBar->AddButton("NOR3", ADD_NOR_GATE_3);
+    GatesBar->AddButton("XOR3", ADD_XOR_GATE_3);
+    NGatesBar->AddButton("XNOR3", ADD_XNOR_GATE_3);
+    GatesBar->AddButton("SWITCH", ADD_SWITCH);
+    NGatesBar->AddButton("LED", ADD_LED);
     DesignBar->OptimizeSpacing();
     SimulationBar->OptimizeSpacing();
     GatesBar->OptimizeSpacing();
@@ -120,29 +122,30 @@ std::vector<Button*> Interface::GetGatesButtons()
 
 void Interface::DrawGatesBars()
 {
-    MainOutput->DrawGatesBars();
+    GatesBar->Draw(MainOutput);
+    NGatesBar->Draw(MainOutput);
 }
 
-void Interface::EnableActions(std::vector<Action::ActionType> ActionTypes)
+void Interface::EnableButtonWithAction(ActionType ActType)
 {
     const std::vector<Button*>& dummyVector = GetActiveBar()->GetButtons();
-    for(unsigned int i = 0; i < ActionTypes.size(); i++)
-    {
-        for(unsigned int j = 0; j < dummyVector.size(); j++)
-            if(dummyVector[j]->GetAction() == ActionTypes[i])
-                dummyVector[j]->SetStatus(Button::NORMAL);
-    }
+    for(unsigned int j = 0; j < dummyVector.size(); j++)
+        if(dummyVector[j] != NULL && dummyVector[j]->GetAction() == ActType)
+        {
+            dummyVector[j]->SetStatus(Interface::NORMAL);
+            break;
+        }
 }
 
-void Interface::DisableActions(std::vector<Action::ActionType> ActionTypes)
+void Interface::DisableButtonWithAction(ActionType ActType)
 {
     const std::vector<Button*>& dummyVector = GetActiveBar()->GetButtons();
-    for(unsigned int i = 0; i < ActionTypes.size(); i++)
-    {
-        for(unsigned int j = 0; j < dummyVector.size(); j++)
-            if(dummyVector[j]->GetAction() == ActionTypes[i])
-                dummyVector[j]->SetStatus(Button::DISABLED);
-    }
+    for(unsigned int j = 0; j < dummyVector.size(); j++)
+        if(dummyVector[j] != NULL && dummyVector[j]->GetAction() == ActType)
+        {
+            dummyVector[j]->SetStatus(Interface::DISABLED);
+            break;
+        }
 }
 
 void Interface::SwitchAppMode()
@@ -196,11 +199,12 @@ void Interface::ZoomIn()
     if(Zoom < 5)
     {
         std::pair<int,int> Center = MainInput->GetMousePosition();
-        Offset.first = std::max(0, int(Offset.first + (Center.first-ToolBarWidth-BorderSize+Offset.first)/double(Zoom) + 0.5));
-        Offset.second = std::max(0, int(Offset.second + (Center.second+Offset.second)/double(Zoom) + 0.5));
+        Offset.first = Offset.first + (Center.first-ToolBarWidth-BorderSize+Offset.first)/double(Zoom) + 0.5;
+        Offset.second = Offset.second + (Center.second+Offset.second)/double(Zoom) + 0.5;
         Zoom++;
         GridSize = GridSize/(Zoom-1)*Zoom;
         PinRadius = PinRadius/(Zoom-1)*Zoom;
+        ShiftOffsetBy(std::pair<int,int> (0, 0));
     }
 }
 
@@ -209,18 +213,19 @@ void Interface::ZoomOut()
     if(Zoom > 2)
     {
         std::pair<int,int> Center = std::pair<int,int> (SimCanvas->GetGraphicsInfo().GetX()+SimCanvas->GetGraphicsInfo().GetWidth()/2.0+0.5, SimCanvas->GetGraphicsInfo().GetY()+SimCanvas->GetGraphicsInfo().GetHeight()/2.0+0.5);
-        Offset.first = std::max(0, int(Offset.first - (Center.first-ToolBarWidth-BorderSize+Offset.first)/double(Zoom) + 0.5));
-        Offset.second = std::max(0, int(Offset.second - (Center.second+Offset.second)/double(Zoom) + 0.5));
+        Offset.first = Offset.first - (Center.first-ToolBarWidth-BorderSize+Offset.first)/double(Zoom) + 0.5;
+        Offset.second = Offset.second - (Center.second+Offset.second)/double(Zoom) + 0.5;
         Zoom--;
         GridSize = GridSize/(Zoom+1)*Zoom;
         PinRadius = PinRadius/(Zoom+1)*Zoom;
+        ShiftOffsetBy(std::pair<int,int> (0, 0));
     }
 }
 
 void Interface::ShiftOffsetBy(std::pair<int,int> Delta)
 {
-    Offset.first = std::max(0, Offset.first+Delta.first);
-    Offset.second = std::max(0, Offset.second+Delta.second);
+    Offset.first = std::min(std::max(0, Offset.first+Delta.first), SizeX*Zoom*5 - SimCanvas->GetGraphicsInfo().GetX() - SimCanvas->GetGraphicsInfo().GetWidth()+ToolBarWidth+BorderSize);
+    Offset.second = std::min(std::max(0, Offset.second+Delta.second), SizeY*Zoom*5 - SimCanvas->GetGraphicsInfo().GetY() - SimCanvas->GetGraphicsInfo().GetHeight());
 }
 
 void Interface::ClearCanvas()
@@ -231,17 +236,16 @@ void Interface::ClearCanvas()
 void Interface::ResetWindow()
 {
     MainOutput->DrawBorders();
-    MainOutput->UpdateActiveBar();
+    GetActiveBar()->Draw(MainOutput);
     StatusBar->Draw(MainOutput);
 }
 
 void Interface::SyncWindow()
 {
-    MainOutput->HandleMouse();
     MainOutput->SyncWindow();
 }
 
-void Interface::DrawComponent(const GraphicsInfo& GfxInfo, std::string ImagePath, Component::Status r_Status)
+void Interface::DrawComponent(const GraphicsInfo& GfxInfo, std::string ImagePath, ComponentStatus r_Status)
 {
     MainOutput->DrawComponent(BufferGfxInfo(GfxInfo), std::string("")+ char(Zoom + '0') +"/"+ImagePath,r_Status);
 }
@@ -251,23 +255,23 @@ void Interface::DrawLabel(const GraphicsInfo& GfxInfo, std::string Text)
     MainOutput->DrawLabel(BufferGfxInfo(GfxInfo), Text);
 }
 
-void Interface::DrawPin(std::pair<int,int> Center, bool Connected)
+void Interface::DrawPin(std::pair<int,int> Center, bool Connected, bool Connectable)
 {
-    MainOutput->DrawPin(BufferPoint(Center), Connected, std::string("Components/")+char(Zoom + '0')+std::string("/PIN/"));
+    MainOutput->DrawPin(BufferPoint(Center), Connected, Connectable, std::string("Components/")+char(Zoom + '0')+std::string("/PIN/"));
 }
 
-void Interface::DrawConnection(const std::vector< std::pair<int,int> >& Vertices, bool Selected)
+void Interface::DrawConnection(const std::vector< std::pair<int,int> >& Vertices, ComponentStatus r_Status, Signal r_Signal)
 {
     std::vector< std::pair<int,int> > BufferedVertices;
     for(unsigned int i = 0; i < Vertices.size(); i++)
         BufferedVertices.push_back(BufferPoint(Vertices[i]));
-    MainOutput->DrawConnection(BufferedVertices, Selected);
+    MainOutput->DrawConnection(BufferedVertices, r_Status, r_Signal);
 }
 
 void Interface::PrintMsg(std::string Text)
 {
     StatusBar->Draw(MainOutput);
-    MainOutput->PrintMsg(Text);
+    MainOutput->DrawLabel(GraphicsInfo(StatusBar->GetGraphicsInfo()), Text);
 }
 
 void Interface::SetTooltipText(std::string Text)
@@ -310,14 +314,24 @@ std::string Interface::GetSrting() const
     return MainInput->GetSrting();
 }
 
-Action::ActionType Interface::GetUserAction() const
+ActionType Interface::GetUserAction() const
 {
     return MainInput->GetUserAction();
+}
+
+bool Interface::IsDoubleClick() const
+{
+    return MainInput->IsDoubleClick();
 }
 
 bool Interface::IsDragging() const
 {
     return MainInput->IsDragging();
+}
+
+bool Interface::IsCtrlOn() const
+{
+    return MainInput->IsCtrlOn();
 }
 
 Bar* Interface::GetActiveBar()

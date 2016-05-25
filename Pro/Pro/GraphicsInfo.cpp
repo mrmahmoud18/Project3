@@ -36,6 +36,16 @@ int GraphicsInfo::GetHeight() const
     return Height;
 }
 
+std::pair<int,int> GraphicsInfo::GetOrigin() const
+{
+    return std::pair<int,int> (X, Y);
+}
+
+std::pair<int,int> GraphicsInfo::GetCenter() const
+{
+    return std::pair<int,int> (X+Width/2.0+0.5, Y+Height/2.0+0.5);
+}
+
 void GraphicsInfo::SetX(int X)
 {
     this->X = X;
@@ -56,24 +66,10 @@ void GraphicsInfo::SetHeight(int Height)
     this->Height = Height;
 }
 
-void GraphicsInfo::ShiftUp(int Offset)
+void GraphicsInfo::ShiftBy(std::pair<int,int> Delta)
 {
-    Y -= Offset;
-}
-
-void GraphicsInfo::ShiftDown(int Offset)
-{
-    Y += Offset;
-}
-
-void GraphicsInfo::ShiftLeft(int Offset)
-{
-    X -= Offset;
-}
-
-void GraphicsInfo::ShiftRight(int Offset)
-{
-    X += Offset;
+    X += Delta.first;
+    Y += Delta.second;
 }
 
 bool GraphicsInfo::Contains(int x, int y) const

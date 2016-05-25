@@ -1,5 +1,6 @@
 #include "NAND2.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 NAND2::NAND2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -12,20 +13,23 @@ NAND2::NAND2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxIn
 void NAND2::Operate()
 {
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::LOW)
+		if (m_InputPins[i].GetStatus() == LOW)
 		{
-			m_OutputPin.SetStatus(Pin::HIGH);
+			m_OutputPin.SetStatus(HIGH);
 			return;
 		}
-	}
-	m_OutputPin.SetStatus(Pin::LOW);
+	m_OutputPin.SetStatus(LOW);
 }
 
-void NAND2::Draw(Interface* pInterface)
+void NAND2::Draw(Interface* pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "NAND2", GetStatus());
 	for(unsigned int i = 0; i < m_InputPins.size(); i++)
         m_InputPins[i].Draw(pInterface);
 	m_OutputPin.Draw(pInterface);
+}
+
+void NAND2::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new NAND2(*this));
 }

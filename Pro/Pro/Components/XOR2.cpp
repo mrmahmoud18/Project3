@@ -1,5 +1,6 @@
 #include "XOR2.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 XOR2::XOR2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -11,25 +12,17 @@ XOR2::XOR2(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo
 
 void XOR2::Operate()
 {
-	int cont = 0;
-	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::HIGH)
-		{
-			cont++;
-		}
-	}
-	if (cont == 1 )
-	{
-		m_OutputPin.SetStatus(Pin::HIGH);
-	}
+	int Count = 0;
+	for (unsigned int  i = 0; i < m_InputPins.size(); i++)
+		if (m_InputPins[i].GetStatus() == HIGH)
+			Count++;
+	if (Count%2 == 1)
+		m_OutputPin.SetStatus(HIGH);
 	else
-	{
-		m_OutputPin.SetStatus(Pin::LOW);
-	}
+		m_OutputPin.SetStatus(LOW);
 }
 
-void XOR2::Draw(Interface* pInterface)
+void XOR2::Draw(Interface* pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "XOR2", GetStatus());
 	for(unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -37,5 +30,7 @@ void XOR2::Draw(Interface* pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
-
-
+void XOR2::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new XOR2(*this));
+}

@@ -1,5 +1,6 @@
 #include "NAND3.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 NAND3::NAND3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -13,17 +14,15 @@ NAND3::NAND3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxIn
 void NAND3::Operate()
 {
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::LOW)
+		if (m_InputPins[i].GetStatus() == LOW)
 		{
-			m_OutputPin.SetStatus(Pin::HIGH);
+			m_OutputPin.SetStatus(HIGH);
 			return;
 		}
-	}
-	m_OutputPin.SetStatus(Pin::LOW);
+	m_OutputPin.SetStatus(LOW);
 }
 
-void NAND3::Draw(Interface * pInterface)
+void NAND3::Draw(Interface * pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "NAND3", GetStatus());
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -31,3 +30,7 @@ void NAND3::Draw(Interface * pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
+void NAND3::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new NAND3(*this));
+}

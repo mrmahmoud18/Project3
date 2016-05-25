@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../Enums.h"
 #include "../GraphicsInfo.h"
-#include "../Actions/Action.h"
 #include "../Components/Component.h"
 
 #include <SFML/Graphics.hpp>
@@ -18,15 +18,16 @@ class Interface
 {
 public:
     enum MouseStatus{POINTER, CLICKER, NAVIGATION, DRAG, TEXT, HIDDEN};
-    Interface();
+    enum ButtonStatus {NORMAL, FOCUSED, PRESSED, DISABLED};
+    Interface(int r_X, int r_Y);
     ~Interface();
     void SetBusy(bool r_Busy);
     void SetMouseStatus(MouseStatus r_MouseStatus);
     std::vector<Button*> GetActiveButtons();
     std::vector<Button*> GetGatesButtons();
     void DrawGatesBars();
-    void EnableActions(std::vector<Action::ActionType> ActionTypes);
-    void DisableActions(std::vector<Action::ActionType> ActionTypes);
+    void EnableButtonWithAction(ActionType ActType);
+    void DisableButtonWithAction(ActionType ActType);
     void SwitchAppMode();
     void SwitchAppTheme();
     void ZoomIn();
@@ -35,10 +36,10 @@ public:
     void ClearCanvas();
     void ResetWindow();
     void SyncWindow();
-    void DrawComponent(const GraphicsInfo& GfxInfo, std::string ImagePath, Component::Status r_Status);
+    void DrawComponent(const GraphicsInfo& GfxInfo, std::string ImagePath, ComponentStatus r_Status);
 	void DrawLabel(const GraphicsInfo& GfxInfo, std::string Text);
-	void DrawPin(std::pair<int,int> Center, bool Connected = false);
-	void DrawConnection(const std::vector< std::pair<int,int> >& Vertices, bool Selected = false);
+	void DrawPin(std::pair<int,int> Center, bool Connected, bool Connectable);
+	void DrawConnection(const std::vector< std::pair<int,int> >& Vertices, ComponentStatus r_Status, Signal r_Signal);
 	void PrintMsg(std::string Text);
 	void SetTooltipText(std::string Text);
 	std::pair<int,int> GetMousePosition(bool Absolute=false) const;
@@ -46,8 +47,10 @@ public:
 	std::pair<int,int> GetInstantClick(bool Absolute=false) const;
 	std::pair<int,int> GetInstantRelease(bool Absolute=false) const;
 	std::string GetSrting() const;
-	Action::ActionType GetUserAction() const;
+	ActionType GetUserAction() const;
+	bool IsDoubleClick() const;
 	bool IsDragging() const;
+	bool IsCtrlOn() const;
 
 private:
     friend class Input;
@@ -66,7 +69,7 @@ private:
 
     sf::RenderWindow Window;
 
-    int Zoom;
+    int SizeX, SizeY, Zoom;
     std::pair<int,int> Offset;
     std::pair<int,int> BufferPoint(std::pair<int,int> Point) const;
     std::pair<int,int> ReverseBufferPoint(std::pair<int,int> Point) const;

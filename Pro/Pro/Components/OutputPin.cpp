@@ -7,28 +7,43 @@ OutputPin::OutputPin(std::pair<int,int> r_Center, int r_FanOut): Pin(r_Center)
 	m_FanOut = r_FanOut;
 }
 
-bool OutputPin::IsConnectable()
+OutputPin::OutputPin(const OutputPin& Original): Pin(Original)
 {
-    return m_Connections.size() == 0;
+    m_FanOut = Original.m_FanOut;
+    m_Connections.clear();
+}
+
+std::vector<Connection*> OutputPin::GetConnections()
+{
+    return m_Connections;
+}
+
+bool OutputPin::IsConnected() const
+{
+    return !m_Connections.empty();
+}
+
+bool OutputPin::IsConnectable() const
+{
+    return (int)m_Connections.size() < m_FanOut;
 }
 
 void OutputPin::ConnectTo(Connection * r_Connection)
 {
+	if((int)m_Connections.size() == m_FanOut)
+        throw;
 	m_Connections.push_back(r_Connection);
 }
 
 void OutputPin::DeconnectFrom(Connection * r_Connection)
 {
-	///NOT GOOD
-	m_Connections.erase(std::find(m_Connections.begin(), m_Connections.end(), r_Connection));
+	std::vector<Connection*>::iterator dummyIt = std::find(m_Connections.begin(), m_Connections.end(), r_Connection);
+    if(dummyIt == m_Connections.end())
+        throw;
+    m_Connections.erase(dummyIt);
 }
 
-void OutputPin::Draw(Interface* pInterface)
+void OutputPin::Draw(Interface* pInterface) const
 {
-    pInterface->DrawPin(GetCenter(), m_Connections.size() != 0);
-}
-
-bool OutputPin::IsValidToSimulate()
-{
-	return (m_Connections.size() != 0);
+    pInterface->DrawPin(GetCenter(), m_Connections.size() != 0, IsConnectable());
 }

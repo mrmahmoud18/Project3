@@ -2,13 +2,19 @@
 
 #include "Action.h"
 
-class Simulate: public Action
+#include <set>
+
+class Component;
+
+class Drag: public Action
 {
 private:
+    std::pair<int,int> Base;
+    std::set<Component*> Items;
     virtual void ReadActionParameters();
 
 public:
-    Simulate(ApplicationManager *pApp);
+    Drag(ApplicationManager *pApp);
 	virtual void Execute();
 	virtual void Undo();
 	virtual void Redo();

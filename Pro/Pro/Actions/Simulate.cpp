@@ -1,32 +1,17 @@
 #include "Simulate.h"
+
 #include "../ApplicationManager.h"
 
+Simulate::Simulate(ApplicationManager *pApp): Action(pApp) {}
 
-Simulate::Simulate(ApplicationManager * pApp)
-	:Action(pApp)
-{
-}
-
-Simulate::~Simulate()
-{
-}
+void Simulate::ReadActionParameters() {}
 
 void Simulate::Execute()
 {
-	if (!pManager->Simulate())
-	{
+	if (!pManager->SimulateComponents())
 		throw;
-	} 
 }
 
-void Simulate::ReadActionParameters()
-{
-}
+void Simulate::Undo() {}
 
-void Simulate::Undo()
-{
-}
-
-void Simulate::REDO()
-{
-}
+void Simulate::Redo() {}

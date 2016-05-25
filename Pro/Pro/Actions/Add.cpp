@@ -9,21 +9,22 @@ void Add::ReadActionParameters() {}
 
 void Add::Execute()
 {
-    std::vector<Button*> Buttons = pManager->GetInterface()->GetActiveButtons();
-    std::vector<Button*> Gates = pManager->GetInterface()->GetGatesButtons();
+    const std::vector<Button*>& Buttons = pManager->GetInterface()->GetActiveButtons();
+    const std::vector<Button*>& Gates = pManager->GetInterface()->GetGatesButtons();
     std::pair<int,int> dummy;
     ActionType Act = NONE;
     for(unsigned int i = 0; i < Buttons.size(); i++)
         if(Buttons[i] != NULL)
             if(Buttons[i]->GetAction() == ADD)
             {
-                Buttons[i]->SetStatus(Button::PRESSED);
+                Buttons[i]->SetStatus(Interface::PRESSED);
                 break;
             }
     pManager->GetInterface()->SetBusy(true);
     pManager->UpdateInterface();
     pManager->GetInterface()->SetBusy(false);
     pManager->GetInterface()->DrawGatesBars();
+    pManager->GetInterface()->PrintMsg("Choose a component to add");
     pManager->SyncInterface();
     do
     {
@@ -32,6 +33,7 @@ void Add::Execute()
         pManager->UpdateInterface();
         pManager->GetInterface()->SetBusy(false);
         pManager->GetInterface()->DrawGatesBars();
+        pManager->GetInterface()->PrintMsg("Choose a component to add");
         pManager->SyncInterface();
     } while(dummy.first == -1 && dummy.second == -1);
     for(unsigned int i = 0; i < Gates.size(); i++)
@@ -45,10 +47,11 @@ void Add::Execute()
         if(Buttons[i] != NULL)
             if(Buttons[i]->GetAction() == ADD)
             {
-                Buttons[i]->SetStatus(Button::NORMAL);
+                Buttons[i]->SetStatus(Interface::NORMAL);
                 break;
             }
     pManager->UpdateInterface();
+    pManager->GetInterface()->PrintMsg("Choose a position");
     pManager->SyncInterface();
     pManager->ExecuteAction(Act);
 }

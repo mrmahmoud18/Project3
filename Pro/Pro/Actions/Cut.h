@@ -2,9 +2,14 @@
 
 #include "Action.h"
 
+#include <set>
+
+class Component;
+
 class Cut: public Action
 {
 private:
+    std::set<Component*> Components;
     virtual void ReadActionParameters();
 
 public:

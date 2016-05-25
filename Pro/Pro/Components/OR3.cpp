@@ -1,5 +1,6 @@
 #include "OR3.h"
 
+#include "../ApplicationManager.h"
 #include "../GUI/Interface.h"
 
 OR3::OR3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 5)
@@ -13,16 +14,15 @@ OR3::OR3(const GraphicsInfo & r_GfxInfo, std::string r_Label) : Gate(r_GfxInfo, 
 void OR3::Operate()
 {
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
-	{
-		if (m_InputPins[i].GetStatus() == Pin::LOW)
+		if (m_InputPins[i].GetStatus() == HIGH)
 		{
-			m_OutputPin.SetStatus(Pin::LOW);
+			m_OutputPin.SetStatus(HIGH);
+			return;
 		}
-	}
-	m_OutputPin.SetStatus(Pin::HIGH);
+	m_OutputPin.SetStatus(LOW);
 }
 
-void OR3::Draw(Interface * pInterface)
+void OR3::Draw(Interface * pInterface) const
 {
 	pInterface->DrawComponent(GetGraphicsInfo(), "OR3", GetStatus());
 	for (unsigned int i = 0; i < m_InputPins.size(); i++)
@@ -30,3 +30,7 @@ void OR3::Draw(Interface * pInterface)
 	m_OutputPin.Draw(pInterface);
 }
 
+void OR3::Copy(ApplicationManager * pManager) const
+{
+	pManager->PushIntoClipboard(new OR3(*this));
+}

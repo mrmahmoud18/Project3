@@ -59,7 +59,6 @@ void TruthTable::GetLEDResults()
 
 void TruthTable::CreateTable()
 {
-
 }
 
 

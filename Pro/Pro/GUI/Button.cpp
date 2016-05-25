@@ -2,7 +2,7 @@
 
 #include "Output.h"
 
-Button::Button(const GraphicsInfo& r_GfxInfo, const std::string& r_ImagePath, Action::ActionType r_ActionType, ButtonStatus r_Status): m_GfxInfo(r_GfxInfo)
+Button::Button(const GraphicsInfo& r_GfxInfo, const std::string& r_ImagePath, ActionType r_ActionType, Interface::ButtonStatus r_Status): m_GfxInfo(r_GfxInfo)
 {
     m_ImagePath = r_ImagePath;
     m_ActionType = r_ActionType;
@@ -16,17 +16,17 @@ void Button::Draw(Output* pOut)
     pOut->DrawButton(m_GfxInfo, m_ImagePath, m_Status);
 }
 
-void Button::SetStatus(ButtonStatus r_Status)
+void Button::SetStatus(Interface::ButtonStatus r_Status)
 {
     m_Status = r_Status;
 }
 
-Button::ButtonStatus Button::GetStatus() const
+Interface::ButtonStatus Button::GetStatus() const
 {
     return m_Status;
 }
 
-Action::ActionType Button::GetAction() const
+ActionType Button::GetAction() const
 {
     return m_ActionType;
 }

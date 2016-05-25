@@ -2,13 +2,13 @@
 
 #include "Action.h"
 
-class Simulate: public Action
+class Stop: public Action
 {
 private:
     virtual void ReadActionParameters();
 
 public:
-    Simulate(ApplicationManager *pApp);
+    Stop(ApplicationManager *pApp);
 	virtual void Execute();
 	virtual void Undo();
 	virtual void Redo();
